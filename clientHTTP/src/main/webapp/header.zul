@@ -1,0 +1,12 @@
+<hbox  vflex="1" hflex="1" pack="center" align="end">
+	<div hflex="1" height="100px">
+		<div style="float:right">
+			<label value="Jan Nowak"/>
+			<button label="historia" onClick='Executions.sendRedirect("/history.zul")'/>
+			<button label="edytuj" onClick='Executions.sendRedirect("/edit.zul")'/>
+			<div height="15px"></div>
+			<button label="Wybór grup" onClick='Executions.sendRedirect("/selectGroup.zul")'/>
+		</div>
+	</div>
+</hbox>
+

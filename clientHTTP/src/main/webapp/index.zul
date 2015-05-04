@@ -1,0 +1,38 @@
+<?page title="Logowanie"?>
+<window border="none" hflex="1" vflex="1" 
+	viewModel="@id('vm') @init('agh.sius.project.viewmodel.Login')" 
+	apply="org.zkoss.bind.BindComposer">
+	<borderlayout>
+		<north border="none" height="30%"/>
+		<east  border="none" width="25%"/>
+		<west  border="none" width="25%"/>		
+		<center border="none" autoscroll="true" >
+			<vlayout>
+				<div width="10%"/>
+				<grid>
+					<columns visible="false">
+						<column width="110px" align="right"/>
+						<column align="center"/>
+					</columns>
+					<rows>
+						<row spans="2" align="center" visible="false"><cell align="center">
+							<label style="color:red;"  value="Podane dane są niepoprawne"/>
+						</cell></row>
+						<row>
+							<label value="Login" />
+							<textbox id="login"  width="60%" value="@bind(vm.login)"/>
+						</row>
+						<row>
+							<label value="Hasło" />
+							<textbox id="haslo" type="password" width="60%" value="@bind(vm.password)"/>
+						</row>
+						
+						<row spans="2">
+							<button label="Zaloguj się" width="100%" onClick="@command('signin')"/>
+						</row>
+					</rows>					
+				</grid>	
+			</vlayout>	
+		</center>	
+	</borderlayout>
+</window>

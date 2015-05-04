@@ -1,0 +1,31 @@
+<?page title="Wybierz grupe" contentType="text/html;charset=UTF-8"?>
+<window border="none" hflex="1" vflex="1" 	
+	viewModel="@id('vm') @init('agh.sius.project.viewmodel.SelectGroup')" 
+	apply="org.zkoss.bind.BindComposer" >
+	<borderlayout>
+		<north border="none" height="30%">
+			<include src="header.zul"></include>
+		</north>
+		<east  border="none" width="25%"/>
+		<west  border="none" width="25%"/>		
+		<center border="none" autoscroll="true" >
+			<vlayout>
+				<div width="10%"/>
+				<grid model="@load(vm.groups)" emptyMessage="brak grup" mold="paging" pageSize="10">
+					<columns visible="false">
+						<column width="200px" align="center"/>
+						<column align="center"/>
+					</columns>
+					<rows>
+						<template name="model">  
+							<row>
+								<label value="@load(each.name)"/>
+								<button label="Przejdź" onClick="@command('selectGroup',val=each.id)"/>
+							</row>
+						</template>
+					</rows>					
+				</grid>	
+			</vlayout>	
+		</center>	
+	</borderlayout>
+</window>

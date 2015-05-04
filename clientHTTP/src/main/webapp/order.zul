@@ -1,0 +1,55 @@
+<?page title="Widok grupy" contentType="text/html;charset=UTF-8"?>
+<window border="none" hflex="1" vflex="1" 	
+	viewModel="@id('vm') @init('agh.sius.project.viewmodel.GroupView')" 
+	apply="org.zkoss.bind.BindComposer" >
+	
+	<borderlayout>
+		<north border="none" height="30%"><include src="header.zul"></include></north>
+		<east  border="none" width="5%"/>
+		<west  border="none" width="5%"/>		
+		<center border="none" autoscroll="true" >
+			<vlayout>
+				<label value="Nazwa grupy" />
+				<label value="wiadomość grupowa widziana przez wszystkich"/>
+				<grid>
+					<auxhead>
+						<auxheader label="Zamówienie" colspan="5" align="center"/>
+					</auxhead>	
+					<columns visible="true">
+						<column label="Nazwa produktu"/>
+						<column label="Liczba zamówionych szt."/>
+						<column label="Status"/>
+						<column label="?"/>
+						<column />
+					</columns>
+					<rows>
+						<row>
+							<label value="Danie dnia"/>
+							<label value="2"/>
+							<label value="W trakcie realizacji"/>
+							<label value=""/>
+							<button label="zamow"/>
+						</row>
+						<row>
+							<label value="Pizza"/>
+							<label value="1"/>
+							<label value="Oczekuje na pełny stan"/>
+							<label value="3/5"/>
+							<button label="zamow"/>
+						</row>
+						<row>
+							<label value="Pizza"/>
+							<label value="2"/>
+							<label value="W trakcie realizacji"/>
+							<label value=""/>
+							<button label="zamow"/>
+						</row>
+					</rows>
+				</grid>
+				<button label="Nowe zamówienie" onClick="@command('newOrder')"/>
+				<button label="Widok szczegółowy zamówień" onClick="@command('ordersDetail')"/>
+				<button label="Moje zamówienie" />
+			</vlayout>	
+		</center>	
+	</borderlayout>
+</window>

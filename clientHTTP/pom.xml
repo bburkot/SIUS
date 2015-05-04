@@ -1,0 +1,297 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+	<groupId>agh.sius</groupId>
+	<artifactId>project</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	
+	<name>SIUS Project</name>
+	<description>SIUS Project</description>
+	<licenses>
+		<license>
+			<name>GNU LESSER GENERAL PUBLIC LICENSE, Version 3</name>
+			<url>http://www.gnu.org/licenses/lgpl.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+<!-- PROPERTIES AND APP CONFIGURATION -->	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<warname>${project.artifactId}</warname>
+		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>	
+		<packname>-${project.version}-FL-${maven.build.timestamp}</packname>
+		
+		<tomcat.address>0.0.0.0:8080</tomcat.address>
+		<tomcat.user>user</tomcat.user>
+		<tomcat.password>password</tomcat.password>
+		<tomcat.warDesc>${project.artifactId}</tomcat.warDesc>
+		
+		<zk.version>7.0.2</zk.version>
+		<hib.version>4.3.6.Final</hib.version>
+		<classesDir>${project.build.directory}/${warname}/WEB-INF/classes</classesDir>
+		<commons-io>1.3.1</commons-io>	
+		<java-compiler>1.7</java-compiler>
+		<javax.mail.version>1.4.3</javax.mail.version>
+		<birt.version>4.4.0</birt.version>				
+	</properties>
+	
+<!-- REPOSITORIES -->
+	<repositories>
+		<repository>
+			<id>ZK CE</id>
+			<name>ZK CE Repository</name>
+			<url>http://mavensync.zkoss.org/maven2</url>
+		</repository>
+		<repository>
+			<id>ZK EVAL</id>
+      		<name>ZK Evaluation Repository</name>
+			<url>http://mavensync.zkoss.org/eval</url>
+		</repository>
+	</repositories>
+	
+	<pluginRepositories>
+		<pluginRepository>
+			<id>zkmaven</id>
+			<name>ZK Maven Plugin Repository</name>
+			<url>http://mavensync.zkoss.org/maven2/</url>
+		</pluginRepository>
+	</pluginRepositories>
+	
+<!-- DEPENDENCIES -->
+	<dependencies>
+      	
+<!--     	<dependency> -->
+<!-- 			<groupId>org.eclipse.birt.runtime</groupId> -->
+<!-- 			<artifactId>org.eclipse.birt.runtime</artifactId> -->
+<!-- 			<version>${birt.version}</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.reflections</groupId> -->
+<!-- 			<artifactId>reflections</artifactId> -->
+<!-- 			<version>0.9.9-RC1</version> -->
+<!-- 		</dependency> -->
+
+<!-- ZK -->
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zkbind</artifactId>
+			<version>${zk.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zul</artifactId>
+			<version>${zk.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zkplus</artifactId>
+			<version>${zk.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zhtml</artifactId>
+			<version>${zk.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io}</version>
+		</dependency>
+		
+		<!-- ZK 5 breeze theme
+		<dependency>
+			<groupId>org.zkoss.theme</groupId>
+			<artifactId>breeze</artifactId>
+			<version>${zk.version}</version>
+			<optional>true</optional>
+		</dependency>
+		 -->
+	</dependencies>
+<!--  BUILD -->
+	<build>
+		<finalName>${tomcat.warDesc}</finalName>
+		<pluginManagement>
+			<plugins>
+		<!-- Compile java -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.3.2</version>
+					<configuration>
+						<source>${java-compiler}</source>
+						<target>${java-compiler}</target>
+					</configuration>
+				</plugin>
+		<!-- Build war -->
+				<plugin>
+					<artifactId>maven-war-plugin</artifactId>
+					<groupId>org.apache.maven.plugins</groupId>
+					<version>2.1.1</version>
+				</plugin>
+	<!-- Pack zips -->
+				<plugin>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>2.2</version>
+					<executions>
+						<execution>
+							<id>webapp</id>
+							<phase>package</phase>
+							<goals>
+								<goal>single</goal>
+							</goals>
+							<configuration>
+								<finalName>${warname}</finalName>
+								<appendAssemblyId>false</appendAssemblyId>
+								<descriptors>
+									<descriptor>src/main/assembly/webapp.xml</descriptor>
+								</descriptors>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>		
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>test</id>
+			<build>
+				<plugins>
+			<!-- COPY FILES :  TEST SERVER-->			
+					<plugin>	
+				     	<artifactId>maven-antrun-plugin</artifactId>
+						<groupId>org.apache.maven.plugins</groupId>
+						<version>1.7</version>
+						<executions>
+							<execution>
+								<id>copyHibernateConf</id>						
+								<phase>process-resources</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>						
+								<configuration>
+									<target>
+										<delete file="${basedir}/src/main/resources/hibernate.cfg.xml" />
+										<copy file="${basedir}/src/main/resources/hibernate.test.xml" tofile="${basedir}/src/main/resources/hibernate.cfg.xml" />								
+									</target>
+								</configuration>
+							</execution>
+							<execution>
+								<id>delete useless files</id>						
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>						
+								<configuration>
+									<target>
+										<delete file="${classesDir}/hibernate.test.xml" />
+										<delete file="${classesDir}/hibernate.prod.xml" />
+									</target>
+								</configuration>
+							</execution>							
+						</executions>
+					</plugin>
+		<!--  TOMCAT -->
+					<plugin>
+						<groupId>org.apache.tomcat.maven</groupId>
+						<artifactId>tomcat7-maven-plugin</artifactId>
+						<version>2.2</version>
+						<configuration>
+							<url>http://${tomcat.address}/manager/text</url>
+							<server>TomcatTestServer</server>
+							<path>/${warname}</path>					
+							<username>${tomcat.user}</username>
+							<password>${tomcat.password}</password>					
+							<update>true</update>
+						</configuration>
+						<executions>
+							<execution>
+								<id>tomcat-start</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>tomcat-shutdown</id>
+								<goals>
+									<goal>shutdown</goal>
+								</goals>
+								<phase>post-integration-test</phase>
+							</execution>
+						</executions>
+					</plugin>	
+				</plugins>		
+			</build>	
+		</profile>
+		<profile>
+			<id>prod</id>
+			<build>
+				<plugins>
+					<!-- COPY FILES  PROD SERVER-->			
+					<plugin>	
+				     	<artifactId>maven-antrun-plugin</artifactId>
+						<groupId>org.apache.maven.plugins</groupId>
+						<version>1.7</version>
+						<executions>
+							<execution>
+								<id>copyHibernateConf</id>						
+								<phase>process-resources</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>						
+								<configuration>
+									<target>
+										<delete file="${basedir}/src/main/resources/hibernate.cfg.xml" />
+										<copy file="${basedir}/src/main/resources/hibernate.prod.xml" tofile="${basedir}/src/main/resources/hibernate.cfg.xml" />								
+									</target>
+								</configuration>
+							</execution>
+							<execution>
+								<id>delete useless files</id>						
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>						
+								<configuration>
+									<target>
+										<delete file="${classesDir}/hibernate.test.xml" />
+										<delete file="${classesDir}/hibernate.prod.xml" />
+									</target>
+								</configuration>
+							</execution>							
+						</executions>
+					</plugin>	
+		<!-- Deploy on tomcat server -->
+					<plugin>
+						<groupId>org.apache.tomcat.maven</groupId>
+						<artifactId>tomcat7-maven-plugin</artifactId>
+						<version>2.2</version>
+						<configuration>
+							<url>http://${tomcat.address}/manager/text</url>
+							<server>TomcatTestServer</server>
+							<path>/${warname}</path>					
+							<username>${tomcat.user}</username>
+							<password>${tomcat.password}</password>					
+							<update>true</update>
+						</configuration>
+						<executions>
+							<execution>
+								<id>tomcat-deploy</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>deploy</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>		
+			</build>		
+		</profile>
+	</profiles>
+</project>
+

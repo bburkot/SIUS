@@ -1,0 +1,72 @@
+<?page title="Historia" contentType="text/html;charset=UTF-8"?>
+<window hflex="1" vflex="1" 	
+	viewModel="@id('vm') @init('agh.sius.project.viewmodel.History')" 
+	apply="org.zkoss.bind.BindComposer" >
+	<borderlayout>
+		<north border="none" height="30%">
+			<include src="header.zul"></include>
+		</north>
+		<east  border="none" width="5%"/>
+		<west  border="none" width="5%"/>
+		<center border="none" autoscroll="true" >
+			<vlayout>
+				<grid  mold="paging" pageSize="10">
+					<auxhead>
+						<auxheader label="Platności" colspan="3" align="center"/>
+					</auxhead>	
+					<columns visible="true">
+						<column align="center" label="Imię i nazwisko"/>
+						<column align="center" label="Kwota"/>
+						<column align="center" label=""/>
+					</columns>
+					<rows> 
+						<row>
+							<label value="Jan Nowak"/>
+							<label value="- 50zł."/>
+							<button label="Zapłacił(a)" visible="false" />
+						</row>
+						<row>
+							<label value="Jan Kowalski"/>
+							<label value="10 zł."/>
+							<button label="Zapłacił(a)"/>
+						</row>
+						<row>
+							<label value="Michał Kowalski"/>
+							<label value="10 zł."/>
+							<button label="Zapłacił(a)"/>
+						</row>
+					</rows>					
+				</grid>				
+				<div width="30px"/>
+				<grid  mold="paging" pageSize="15">
+					<auxhead>
+						<auxheader label="Moje zamówienia" colspan="5" align="center"/>
+					</auxhead>	
+					<columns visible="true">
+						<column align="center" label="Nazwa produktu" />
+						<column align="center" label="Data zamówienia" width="120px"/>
+						<column align="center" label="szt." width="60px"/>
+						<column align="center" label="Wartość" width="100px"/>
+						<column align="center" label="Osoba przyjmująca zamówienie"/>
+					</columns>
+					<rows> 
+						<row>
+							<label value="Pizza"/>
+							<label value="2001-04-10"/>
+							<label value="1"/>
+							<label value="10 zł."/>
+							<label value="Jan Kowalski"/>
+						</row>
+						<row>
+							<label value="Pizza"/>
+							<label value="2001-04-10"/>
+							<label value="0.33"/>
+							<label value="4 zł."/>
+							<label value="Jan Kowalski"/>
+						</row>
+					</rows>					
+				</grid>	
+			</vlayout>	
+		</center>	
+	</borderlayout>
+</window>
