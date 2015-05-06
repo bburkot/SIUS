@@ -1,0 +1,103 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>agh.sius</groupId>
+  <artifactId>server</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <name>server</name>
+  <url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<warname>${project.artifactId}</warname>
+		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>	
+		<packname>-${project.version}-FL-${maven.build.timestamp}</packname>
+		
+		<tomcat.address>localhost:8080</tomcat.address>
+		<tomcat.user>user</tomcat.user>
+		<tomcat.password>password</tomcat.password>
+		<tomcat.warDesc>${warname}</tomcat.warDesc>
+		
+		<zk.version>7.0.2</zk.version>
+		<hib.version>4.3.6.Final</hib.version>
+		<classesDir>${project.build.directory}/${warname}/WEB-INF/classes</classesDir>
+		<commons-io>1.3.1</commons-io>	
+		<java-compiler>1.7</java-compiler>
+		<javax.mail.version>1.4.3</javax.mail.version>
+		<birt.version>4.4.0</birt.version>		
+	</properties>
+
+	<dependencies>
+		<dependency>
+    		<groupId>org.hibernate</groupId>
+    		<artifactId>hibernate-core</artifactId>
+    		<version>${hib.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>microsoft</groupId>
+			<artifactId>sqljdbc4</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/src/main/resources/sqljdbc4.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>0.9.9-RC1</version>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<finalName>${tomcat.warDesc}</finalName>
+		<pluginManagement>
+			<plugins>
+		<!-- Compile java -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.3.2</version>
+					<configuration>
+						<source>${java-compiler}</source>
+						<target>${java-compiler}</target>
+					</configuration>
+				</plugin>
+		<!-- Build war -->
+				<plugin>
+					<artifactId>maven-war-plugin</artifactId>
+					<groupId>org.apache.maven.plugins</groupId>
+					<version>2.1.1</version>
+				</plugin>
+	<!-- Pack zips -->
+				<plugin>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>2.2</version>
+					<executions>
+						<execution>
+							<id>webapp</id>
+							<phase>package</phase>
+							<goals>
+								<goal>single</goal>
+							</goals>
+							<configuration>
+								<finalName>${warname}</finalName>
+								<appendAssemblyId>false</appendAssemblyId>
+								<descriptors>
+									<descriptor>src/main/assembly/webapp.xml</descriptor>
+								</descriptors>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>		
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

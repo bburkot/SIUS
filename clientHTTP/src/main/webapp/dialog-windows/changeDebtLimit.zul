@@ -1,0 +1,11 @@
+<window title="Zmień limit zadłużenia" border="normal" closable="true" action="show: slideDown;hide: slideUp">
+	<vlayout>
+		<label value="Jan Nowak"/>
+		<label value="jan.nowak@mail.com"/>
+		<hlayout>
+			<label value="Nowy limit"/>
+			<textbox/>
+		</hlayout>
+		<button label="Zmień"/>
+	</vlayout>
+</window>

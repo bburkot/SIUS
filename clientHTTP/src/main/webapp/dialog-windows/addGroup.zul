@@ -1,0 +1,6 @@
+<window title="Dodaj grupe" border="normal" closable="true" action="show: slideDown;hide: slideUp">
+	
+	<label value="Nazwa grupy"/>
+	<textbox maxlength="200"/>
+	<button label="dodaj"/>
+</window>

@@ -1,12 +1,19 @@
-<hbox  vflex="1" hflex="1" pack="center" align="end">
-	<div hflex="1" height="100px">
-		<div style="float:right">
-			<label value="Jan Nowak"/>
-			<button label="historia" onClick='Executions.sendRedirect("/history.zul")'/>
-			<button label="edytuj" onClick='Executions.sendRedirect("/edit.zul")'/>
-			<div height="15px"></div>
-			<button label="Wybór grup" onClick='Executions.sendRedirect("/selectGroup.zul")'/>
-		</div>
-	</div>
-</hbox>
+<div width="100%" align="right" style="margin-bottom:15px;">
+	<menubar style="margin-bottom:5px;" width="100px" >
+		<menu label="Jan Nowak">
+			<menupopup>
+				<menuitem label="historia" onClick='Executions.sendRedirect("/history.zul")'/>
+				<menuitem label="edytuj" onClick='Executions.sendRedirect("/edit.zul")'/>
+				<menuitem label="wyloguj">
+					<attribute name="onClick">
+						System.out.print("wyloguj TODO");
+						Executions.sendRedirect("/");
+					</attribute>
+				</menuitem>
+			</menupopup>
+		</menu>
+	</menubar>
+	<button label="Strona główna" onClick='Executions.sendRedirect("/selectGroup.zul")'/>
+</div>
+
 

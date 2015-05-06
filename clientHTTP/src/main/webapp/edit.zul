@@ -1,47 +1,50 @@
 <?page title="Edycja konta" contentType="text/html;charset=UTF-8"?>
-<window border="none" hflex="1" vflex="1" 
-	viewModel="@id('vm') @init('agh.sius.project.viewmodel.EditUser')" 
+<window border="none" style="min-width:650px;" 
+	viewModel="@id('vm') @init('agh.sius.client.http.viewmodel.EditUser')" 
 	apply="org.zkoss.bind.BindComposer">
-	<borderlayout>
-		<north border="none" height="30%">
+	
+	<div width="100%" align="center">
+		<div width="600px">
 			<include src="header.zul"></include>
-		</north>
-		<east  border="none" width="25%"/>
-		<west  border="none" width="25%"/>		
-		<center border="none" autoscroll="true" >
-			<vlayout>
-				<grid width="303px">
-					<auxhead>
-						<auxheader label="Edycja konta" colspan="2" align="center"/>
-					</auxhead>	
-					<columns visible="false">
-						<column align="center" width="100px"/>
-						<column align="center" width="200px"/>
-					</columns>
-					<rows>
-						<row>
-							<label value="Imię"/>
-							<textbox/>
-						</row>
-						<row>
-							<label value="Nazwisko"/>
-							<textbox/>
-						</row>
-						<row>
-							<label value="Mail"/>
-							<textbox/>
-						</row>
-						<row>
-							<label value="Hasło"/>
-							<textbox type="password"/>
-						</row>
-						<row>
-							<cell/>
-							<button label="Zapisz"/>
-						</row>
-					</rows>					
-				</grid>	
-			</vlayout>	
-		</center>	
-	</borderlayout>
+		</div>
+		<grid width="350px">
+			<auxhead>
+				<auxheader label="Edycja konta" colspan="2" align="center"/>
+			</auxhead>	
+			<columns visible="false">
+				<column align="center" width="140px"/>
+				<column align="center"/>
+			</columns>
+			<rows>
+				<row>
+					<label value="Imię"/>
+					<textbox/>
+				</row>
+				<row>
+					<label value="Nazwisko"/>
+					<textbox/>
+				</row>
+				<row>
+					<label value="Mail"/>
+					<textbox/>
+				</row>
+				<row>
+					<label value="Stare hasło"/>
+					<textbox type="password"/>
+				</row>
+				<row>
+					<label value="Nowe hasło"/>
+					<textbox type="password"/>
+				</row>
+				<row>
+					<label value="Powtórz hasło"/>
+					<textbox type="password"/>
+				</row>
+				<row>
+					<cell/>
+					<button label="Zapisz"/>
+				</row>
+			</rows>					
+		</grid>	
+	</div>
 </window>

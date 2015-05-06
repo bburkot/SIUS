@@ -1,0 +1,14 @@
+<window title="Zapłać" border="normal" closable="true" action="show: slideDown;hide: slideUp" width="400px">
+	<vlayout>
+		<hlayout>
+			<label value="Jan Nowak"/>
+			<label value="jan.nowak@mail.com"/>
+		</hlayout>	
+		<label value="Obecny dług = 50zł"/>
+		<hlayout>
+			<label value="Zapłać"/>
+			<textbox/>
+		</hlayout>
+		<button label="Wykonaj"/>
+	</vlayout>
+</window>

@@ -1,0 +1,41 @@
+<window title="Historia płatności" border="normal" closable="true" action="show: slideDown;hide: slideUp" width="500px">
+	<grid  mold="paging" pageSize="10" style="margin-bottom:20px;">
+		<auxhead>
+			<auxheader label="Zapłaciłem" colspan="4" align="center"/>
+		</auxhead>
+		<columns>
+			<column align="center" label="Imię i nazwisko"/>
+			<column align="center" label="Mail"/>
+			<column align="center" label="Kwota"/>
+			<column align="center" label="Data" width="100px"/>
+		</columns>
+		<rows>
+			<row>
+				<label value="Jan Nowak"/>
+				<label value="Mail@m.ad"/>
+				<label value="50 zł."/>
+				<label value="2000-01-02"/>
+			</row>
+		</rows>
+	</grid>
+	
+	<grid  mold="paging" pageSize="10">
+		<auxhead>
+			<auxheader label="Otrzymałem przelew od" colspan="4" align="center"/>
+		</auxhead>
+		<columns>
+			<column align="center" label="Imię i nazwisko"/>
+			<column align="center" label="Mail"/>
+			<column align="center" label="Kwota"/>
+			<column align="center" label="Data" width="100px"/>
+		</columns>
+		<rows>
+			<row>
+				<label value="Michał Nowak"/>
+				<label value="Mail@m.ad"/>
+				<label value="50 zł."/>
+				<label value="2000-01-02"/>
+			</row>
+		</rows>
+	</grid>
+</window>

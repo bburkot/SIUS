@@ -1,6 +1,6 @@
 <?page title="Logowanie"?>
 <window border="none" hflex="1" vflex="1" 
-	viewModel="@id('vm') @init('agh.sius.project.viewmodel.Login')" 
+	viewModel="@id('vm') @init('agh.sius.client.http.viewmodel.Login')" 
 	apply="org.zkoss.bind.BindComposer">
 	<borderlayout>
 		<north border="none" height="30%"/>

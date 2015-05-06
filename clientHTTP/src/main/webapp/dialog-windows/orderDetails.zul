@@ -1,0 +1,27 @@
+<window title="Szczegły zamówienia" border="normal" closable="true" action="show: slideDown;hide: slideUp" width="600px">
+
+	<grid>
+		<columns visible="true">
+			<column align="center" label="Nazwa produktu"/>
+			<column align="center" label="Osoba(y) które zamówiły dany produkt"/>
+			<column align="center" label="Cena" width="100px"/>
+		</columns>
+		<rows>
+			<row>
+				<label value="Pizza"/>
+				<cell><label value="Jan Nowak j.n@m.c"/></cell>
+				<label value="21.03zł"/>
+			</row>
+			<row>
+				<label value="Pizza"/>
+				<cell>
+					<vlayout>
+						<label value="Jan Nowak j.n@m.c"/>
+						<label value="Michał Nowak m.n@m.c"/>
+					</vlayout>					
+				</cell> 
+				<label value="21.03zł"/>
+			</row>
+		</rows>
+	</grid>
+</window>

@@ -1,4 +1,4 @@
-package agh.sius.project.viewmodel;
+package agh.sius.client.http.viewmodel;
 
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.zk.ui.Executions;

@@ -5,8 +5,8 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
 
-	<description><![CDATA[My ZK Application]]></description>
-	<display-name>TestZKID</display-name>
+	<description><![CDATA[SIUS Project]]></description>
+	<display-name>SIUS Project</display-name>
 
 	<!-- [Optional]
 	Uncomment if you want to use the ZK filter to post process the HTML output

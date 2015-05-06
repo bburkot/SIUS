@@ -1,0 +1,21 @@
+<window title="Nowe zamówienie" border="normal" closable="true" action="show: slideDown;hide: slideUp" width="500px">
+    
+	<grid style="margin-bottom:10px;">
+		<columns >
+			<column/>
+			<column/>
+		</columns>
+		<rows>
+			<row>
+				<label value="Tytuł"/>
+				<textbox/>
+			</row>
+			<row>
+				<label value="Wiadomośc grupowa"/>
+				<textbox/>
+			</row>
+		</rows>
+	</grid>
+	<button label="Dodaj"/>
+	
+</window>

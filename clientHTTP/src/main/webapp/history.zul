@@ -1,72 +1,101 @@
 <?page title="Historia" contentType="text/html;charset=UTF-8"?>
-<window hflex="1" vflex="1" 	
-	viewModel="@id('vm') @init('agh.sius.project.viewmodel.History')" 
+<window id="historyPage" style="min-width:650px;" 
+	viewModel="@id('vm') @init('agh.sius.client.http.viewmodel.History')" 
 	apply="org.zkoss.bind.BindComposer" >
-	<borderlayout>
-		<north border="none" height="30%">
+	
+	<div width="100%" align="center">
+		<div width="600px">
 			<include src="header.zul"></include>
-		</north>
-		<east  border="none" width="5%"/>
-		<west  border="none" width="5%"/>
-		<center border="none" autoscroll="true" >
-			<vlayout>
-				<grid  mold="paging" pageSize="10">
-					<auxhead>
-						<auxheader label="Platności" colspan="3" align="center"/>
-					</auxhead>	
-					<columns visible="true">
-						<column align="center" label="Imię i nazwisko"/>
-						<column align="center" label="Kwota"/>
-						<column align="center" label=""/>
-					</columns>
-					<rows> 
-						<row>
-							<label value="Jan Nowak"/>
-							<label value="- 50zł."/>
-							<button label="Zapłacił(a)" visible="false" />
-						</row>
-						<row>
-							<label value="Jan Kowalski"/>
-							<label value="10 zł."/>
-							<button label="Zapłacił(a)"/>
-						</row>
-						<row>
-							<label value="Michał Kowalski"/>
-							<label value="10 zł."/>
-							<button label="Zapłacił(a)"/>
-						</row>
-					</rows>					
-				</grid>				
-				<div width="30px"/>
-				<grid  mold="paging" pageSize="15">
-					<auxhead>
-						<auxheader label="Moje zamówienia" colspan="5" align="center"/>
-					</auxhead>	
-					<columns visible="true">
-						<column align="center" label="Nazwa produktu" />
-						<column align="center" label="Data zamówienia" width="120px"/>
-						<column align="center" label="szt." width="60px"/>
-						<column align="center" label="Wartość" width="100px"/>
-						<column align="center" label="Osoba przyjmująca zamówienie"/>
-					</columns>
-					<rows> 
-						<row>
-							<label value="Pizza"/>
-							<label value="2001-04-10"/>
-							<label value="1"/>
-							<label value="10 zł."/>
-							<label value="Jan Kowalski"/>
-						</row>
-						<row>
-							<label value="Pizza"/>
-							<label value="2001-04-10"/>
-							<label value="0.33"/>
-							<label value="4 zł."/>
-							<label value="Jan Kowalski"/>
-						</row>
-					</rows>					
-				</grid>	
-			</vlayout>	
-		</center>	
-	</borderlayout>
+		</div>
+		
+		<grid  mold="paging" pageSize="10" width="600px" style="margin-bottom:20px;">
+			<auxhead>
+				<auxheader colspan="4" align="center">
+					<label value="Płatności" zclass="z-auxheader-content" style="margin-left:200px;"/>
+					<button label="szczegóły" style="margin-left:200px;" onClick="@command('billings')"/>
+				</auxheader>
+			</auxhead>	
+			<columns visible="true">
+				<column align="center" width="170px" label="Imię i nazwisko" />
+				<column align="center" width="240px" label="mail"/>
+				<column align="center" label="Kwota"/>				
+				<column align="center"/>
+			</columns>
+			<rows> 
+				<row>
+					<label value="Jan Nowak"/>
+					<label value="mail"/>
+					<label value="50zł."/>
+					<button label="Zapłać" onClick="@command('pay', val=null)"/>
+				</row>
+				<row>
+					<label value="Jan Kowalski"/>
+					<label value="mail2"/>
+					<label value="-10 zł."/>
+					<cell><button label="Zapłać" visible="false"/></cell>
+				</row>
+				<row>
+					<label value="Michał Kowalski"/>
+					<label value="mail3"/>
+					<label value="-10 zł."/>
+					<cell><button label="Zapłać" visible="false"/></cell>				
+				</row>
+			</rows>					
+		</grid>		
+		
+		<grid  mold="paging" pageSize="10" width="600px" style="margin-bottom:20px;">
+			<auxhead>
+				<auxheader colspan="4" align="center" label="Księgowość"/>
+			</auxhead>	
+			<columns visible="true">
+				<column align="center" width="170px" label="Imię i nazwisko" />
+				<column align="center" width="240px" label="mail"/>
+				<column align="center" label="Kwota"/>
+				<column align="center"/>
+			</columns>
+			<rows> 
+				<row>
+					<label value="Jan Kowalski"/>
+					<label value="mail2"/>
+					<label value="100 zł."/>
+					<button label="Potwierdz"/>
+				</row>
+				<row>
+					<label value="Michał Kowalski"/>
+					<label value="mail3"/>
+					<label value="50 zł."/>
+					<button label="Potwierdz"/>
+				</row>
+			</rows>					
+		</grid>			
+
+		<grid  mold="paging" pageSize="15" width="600px" style="margin-bottom:20px;">
+			<auxhead>
+				<auxheader label="Moje zamówienia" colspan="5" align="center"/>
+			</auxhead>	
+			<columns visible="true">
+				<column align="center" label="Nazwa produktu" />
+				<column align="center" label="Data zamówienia" width="120px"/>
+				<column align="center" label="szt." width="60px"/>
+				<column align="center" label="Wartość" width="100px"/>
+				<column align="center" label="Zrealizował"/>
+			</columns>
+			<rows> 
+				<row>
+					<label value="Pizza"/>
+					<label value="2001-04-10"/>
+					<label value="1"/>
+					<label value="10 zł."/>
+					<label value="Jan Kowalski"/>
+				</row>
+				<row>
+					<label value="Pizza"/>
+					<label value="2001-04-10"/>
+					<label value="0.33"/>
+					<label value="4 zł."/>
+					<label value="Jan Kowalski"/>
+				</row>
+			</rows>					
+		</grid>	
+	</div>
 </window>

@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
 	<groupId>agh.sius</groupId>
-	<artifactId>project</artifactId>
+	<artifactId>client.http</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	
@@ -20,14 +20,14 @@
 <!-- PROPERTIES AND APP CONFIGURATION -->	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<warname>${project.artifactId}</warname>
+		<warname>client</warname>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>	
 		<packname>-${project.version}-FL-${maven.build.timestamp}</packname>
 		
-		<tomcat.address>0.0.0.0:8080</tomcat.address>
-		<tomcat.user>user</tomcat.user>
-		<tomcat.password>password</tomcat.password>
-		<tomcat.warDesc>${project.artifactId}</tomcat.warDesc>
+		<tomcat.address>localhost:8080</tomcat.address>
+		<tomcat.user>admin</tomcat.user>
+		<tomcat.password>admin</tomcat.password>
+		<tomcat.warDesc>${warname}</tomcat.warDesc>
 		
 		<zk.version>7.0.2</zk.version>
 		<hib.version>4.3.6.Final</hib.version>
@@ -62,7 +62,12 @@
 	
 <!-- DEPENDENCIES -->
 	<dependencies>
-      	
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
 <!--     	<dependency> -->
 <!-- 			<groupId>org.eclipse.birt.runtime</groupId> -->
 <!-- 			<artifactId>org.eclipse.birt.runtime</artifactId> -->
@@ -112,7 +117,7 @@
 	</dependencies>
 <!--  BUILD -->
 	<build>
-		<finalName>${tomcat.warDesc}</finalName>
+		<finalName>${warname}</finalName>
 		<pluginManagement>
 			<plugins>
 		<!-- Compile java -->
@@ -160,41 +165,7 @@
 		<profile>
 			<id>test</id>
 			<build>
-				<plugins>
-			<!-- COPY FILES :  TEST SERVER-->			
-					<plugin>	
-				     	<artifactId>maven-antrun-plugin</artifactId>
-						<groupId>org.apache.maven.plugins</groupId>
-						<version>1.7</version>
-						<executions>
-							<execution>
-								<id>copyHibernateConf</id>						
-								<phase>process-resources</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>						
-								<configuration>
-									<target>
-										<delete file="${basedir}/src/main/resources/hibernate.cfg.xml" />
-										<copy file="${basedir}/src/main/resources/hibernate.test.xml" tofile="${basedir}/src/main/resources/hibernate.cfg.xml" />								
-									</target>
-								</configuration>
-							</execution>
-							<execution>
-								<id>delete useless files</id>						
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>						
-								<configuration>
-									<target>
-										<delete file="${classesDir}/hibernate.test.xml" />
-										<delete file="${classesDir}/hibernate.prod.xml" />
-									</target>
-								</configuration>
-							</execution>							
-						</executions>
-					</plugin>
+				<plugins>							
 		<!--  TOMCAT -->
 					<plugin>
 						<groupId>org.apache.tomcat.maven</groupId>
@@ -232,40 +203,6 @@
 			<id>prod</id>
 			<build>
 				<plugins>
-					<!-- COPY FILES  PROD SERVER-->			
-					<plugin>	
-				     	<artifactId>maven-antrun-plugin</artifactId>
-						<groupId>org.apache.maven.plugins</groupId>
-						<version>1.7</version>
-						<executions>
-							<execution>
-								<id>copyHibernateConf</id>						
-								<phase>process-resources</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>						
-								<configuration>
-									<target>
-										<delete file="${basedir}/src/main/resources/hibernate.cfg.xml" />
-										<copy file="${basedir}/src/main/resources/hibernate.prod.xml" tofile="${basedir}/src/main/resources/hibernate.cfg.xml" />								
-									</target>
-								</configuration>
-							</execution>
-							<execution>
-								<id>delete useless files</id>						
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>						
-								<configuration>
-									<target>
-										<delete file="${classesDir}/hibernate.test.xml" />
-										<delete file="${classesDir}/hibernate.prod.xml" />
-									</target>
-								</configuration>
-							</execution>							
-						</executions>
-					</plugin>	
 		<!-- Deploy on tomcat server -->
 					<plugin>
 						<groupId>org.apache.tomcat.maven</groupId>

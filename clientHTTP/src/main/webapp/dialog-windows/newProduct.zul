@@ -1,0 +1,27 @@
+<window title="Nowy produkt" border="normal" closable="true" action="show: slideDown;hide: slideUp" width="500px">
+	<grid style="margin-bottom:10px;">
+		<columns >
+			<column/>
+			<column/>
+		</columns>
+		<rows>
+			<row>
+				<label value="Nazwa produktu"/>
+				<textbox/>
+			</row>
+			<row>
+				<label value="szt."/>
+				<textbox/>
+			</row>
+			<row>
+				<label value="Cena za szt."/>
+				<textbox/>
+			</row>
+			<row>
+				<label value="osób / szt."/>
+				<textbox/>
+			</row>
+		</rows>
+	</grid>
+	<button label="Dodaj"/>
+</window>

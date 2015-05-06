@@ -1,55 +1,55 @@
 <?page title="Widok grupy" contentType="text/html;charset=UTF-8"?>
-<window border="none" hflex="1" vflex="1" 	
-	viewModel="@id('vm') @init('agh.sius.project.viewmodel.GroupView')" 
+<window id="orderPage" border="none" style="min-width:650px;" 	
+	viewModel="@id('vm') @init('agh.sius.client.http.viewmodel.Order')" 
 	apply="org.zkoss.bind.BindComposer" >
 	
-	<borderlayout>
-		<north border="none" height="30%"><include src="header.zul"></include></north>
-		<east  border="none" width="5%"/>
-		<west  border="none" width="5%"/>		
-		<center border="none" autoscroll="true" >
-			<vlayout>
-				<label value="Nazwa grupy" />
-				<label value="wiadomość grupowa widziana przez wszystkich"/>
-				<grid>
-					<auxhead>
-						<auxheader label="Zamówienie" colspan="5" align="center"/>
-					</auxhead>	
-					<columns visible="true">
-						<column label="Nazwa produktu"/>
-						<column label="Liczba zamówionych szt."/>
-						<column label="Status"/>
-						<column label="?"/>
-						<column />
-					</columns>
-					<rows>
-						<row>
-							<label value="Danie dnia"/>
-							<label value="2"/>
-							<label value="W trakcie realizacji"/>
-							<label value=""/>
-							<button label="zamow"/>
-						</row>
-						<row>
-							<label value="Pizza"/>
-							<label value="1"/>
-							<label value="Oczekuje na pełny stan"/>
-							<label value="3/5"/>
-							<button label="zamow"/>
-						</row>
-						<row>
-							<label value="Pizza"/>
-							<label value="2"/>
-							<label value="W trakcie realizacji"/>
-							<label value=""/>
-							<button label="zamow"/>
-						</row>
-					</rows>
-				</grid>
-				<button label="Nowe zamówienie" onClick="@command('newOrder')"/>
-				<button label="Widok szczegółowy zamówień" onClick="@command('ordersDetail')"/>
-				<button label="Moje zamówienie" />
-			</vlayout>	
-		</center>	
-	</borderlayout>
+	<div width="100%" align="center">
+		<div width="600px">
+			<include src="header.zul"></include>
+		</div>
+		<vlayout style="margin-bottom:10px;">
+			<label value="Nazwa grupy" zclass="z-auxheader-content"  style="margin-bottom:10px;"/>
+			<label value="Można zamawiać do 16:00" />
+		</vlayout>
+		
+		<grid width="600px" style="margin-bottom:20px;">
+			<auxhead>
+				<auxheader label="Zamówienie" colspan="5" align="center"/>
+			</auxhead>	
+			<columns visible="true">
+				<column label="Nazwa produktu"/>
+				<column align="center" label="szt."/>
+				<column align="center" label="cena / szt."/>
+				<column align="center" label="?"/>
+				<column align="center"/>
+			</columns>
+			<rows>
+				<row>
+					<label value="Danie dnia"/>
+					<label value="2"/>
+					<label value="25.03zł"/>
+					<label value=""/>
+					<cell><button label="dołącz" visible="false"/></cell>
+					
+				</row>
+				<row>
+					<label value="Pizza"/>
+					<label value="1"/>
+					<label value="45.03zł"/>
+					<label value="3/5"/>
+					<button label="dołącz"/>
+				</row>
+				<row>
+					<label value="Pizza"/>
+					<label value="2"/>
+					<label value="21.03zł"/>
+					<label value=""/>
+					<cell><button label="dołącz" visible="false"/></cell>
+				</row>
+			</rows>
+		</grid>
+		<button label="Nowa pozycja" onClick="@command('newProduct')"/>
+		<button label="Widok szczegółowy zamówień" onClick="@command('orderDetails')"/>
+		<button label="Zamknij zamówienie" />
+	</div>
 </window>
