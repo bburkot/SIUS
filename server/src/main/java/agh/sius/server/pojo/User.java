@@ -19,8 +19,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="\"user\"", uniqueConstraints=@UniqueConstraint(columnNames = {"login"} ))
-public class User implements Serializable {
+@Table(name="\"user\"", uniqueConstraints = { @UniqueConstraint(columnNames = "login", name="UK_login" ), @UniqueConstraint(columnNames = "email", name="UK_mail" )} )
+public class User implements Serializable { 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -45,7 +45,7 @@ public class User implements Serializable {
 	
 	@Column(columnDefinition="char(50)")
 	private String token;
-		
+	
 	@ManyToMany(fetch=FetchType.LAZY, mappedBy="users")
 	private Set<Group> groups;
 	
@@ -70,8 +70,8 @@ public class User implements Serializable {
 	public User(){
 		this.groups = new HashSet<>();
 		this.products = new ArrayList<Product>();
-	}
-
+	}	
+	
 	// getters and setters
 	public long getId() {
 		return id;

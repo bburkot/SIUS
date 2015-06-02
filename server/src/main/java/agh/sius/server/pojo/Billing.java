@@ -19,7 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="billing", uniqueConstraints=@UniqueConstraint(columnNames = {"user_first_id" , "user_second_id" } ))
+@Table(name="billing", uniqueConstraints=@UniqueConstraint(columnNames = {"user_first_id" , "user_second_id" }, name="UK__user_first_id__and__user_second_id" ))
 public class Billing implements Serializable {
 	private static final long serialVersionUID = 1L;
 	

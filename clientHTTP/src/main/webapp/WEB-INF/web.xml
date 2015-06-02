@@ -189,7 +189,11 @@
 		<extension>zul</extension>
 		<mime-type>text/html</mime-type>
 	</mime-mapping>
-
+	
+	<error-page>
+	    <error-code>404</error-code>
+	    <location>/index.zul</location>
+	</error-page>
 	<welcome-file-list>
 		<welcome-file>index.zul</welcome-file>
 		<welcome-file>index.zhtml</welcome-file>

@@ -10,10 +10,10 @@ import agh.sius.server.pojo.Group;
 import agh.sius.server.pojo.Order;
 import agh.sius.server.pojo.User;
 
-public class UserGroupDao {
+public class DAO {
 	private Session session;
 	
-	public UserGroupDao(){
+	public DAO(){
 		session = HibernateUtil.openSession();
 	}
 	
@@ -26,7 +26,7 @@ public class UserGroupDao {
 	
 	
 	// USER POJO
-	public void saveOrUpdateUser(Object obj){
+	public void saveOrUpdate(Object obj){
 		session.beginTransaction();
 		try {
 			session.saveOrUpdate(obj);

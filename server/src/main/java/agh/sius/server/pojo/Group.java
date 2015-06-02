@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.naming.directory.AttributeInUseException;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +19,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name="\"group\"")
@@ -33,7 +39,7 @@ public class Group implements Serializable {
 	private String name;
 		
 	@OneToMany(mappedBy="group" ,fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	private List<Order> orders;
+	private Set<Order> orders;
 	
 	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinTable (name = "user_group",
@@ -42,21 +48,29 @@ public class Group implements Serializable {
 	private Set<User> users;
 
 	// util methods
-	public void addUser(User user){	
+	public Group addUser(User user) throws AttributeInUseException{	
+		if (user == null)
+			throw new AttributeInUseException("User is equal null");
 		users.add(user);
+		return this;
 	}
-	public void addOrder(Order order){
-		orders.add(order);
+	public Group addOrder(Order order) throws AttributeInUseException{		
+		if (users.contains(order.getRealizedBy())){
+			orders.add(order);
+			order.setGroup(this);
+			return this;
+		}
+		throw new AttributeInUseException("User realized this order do not belong to group");
 	}
 	
 	// constructors
 	public Group(){
-		orders = new ArrayList<Order>();
+		orders = new HashSet<Order>();
 		users = new HashSet<User>();
 	}
 	public Group(String name) {
 		this.name = name;
-		orders = new ArrayList<Order>();
+		orders = new HashSet<Order>();
 		users = new HashSet<User>();
 	}
 	
@@ -73,10 +87,10 @@ public class Group implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<Order> getOrders() {
+	public Set<Order> getOrders() {
 		return orders;
 	}
-	public void setOrders(List<Order> orders) {
+	public void setOrders(Set<Order> orders) {
 		this.orders = orders;
 	}
 	public Set<User> getUsers() {

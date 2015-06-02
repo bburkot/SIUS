@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.naming.directory.AttributeInUseException;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import agh.sius.server.common.OrderState;
+import agh.sius.server.pojo.xsd.OrderState;
 
 @Entity
 @Table(name="\"order\"")
@@ -61,12 +62,11 @@ public class Order implements Serializable {
 	public Order(){
 		this.products = new ArrayList<Product>();
 	}
-	public Order(String msg, OrderState state, Date date, User realizedBy, Group group) {
+	public Order(String msg, Date date, User realizedBy) {
 		this.msg = msg;
-		this.state = state;
+		this.state = OrderState.OPEN;
 		this.date = date;
 		this.realizedBy = realizedBy;
-		this.group = group;
 		this.products = new ArrayList<Product>();
 	}
 
@@ -104,7 +104,9 @@ public class Order implements Serializable {
 	public Group getGroup() {
 		return group;
 	}
-	public void setGroup(Group group) {
+	public void setGroup(Group group) throws AttributeInUseException {
+		if (this.group != null)
+			throw new AttributeInUseException("This order belong to another group");
 		this.group = group;
 	}
 	public List<Product> getProducts() {

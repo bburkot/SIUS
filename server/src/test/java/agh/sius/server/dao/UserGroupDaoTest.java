@@ -2,6 +2,8 @@ package agh.sius.server.dao;
 
 import static org.junit.Assert.*;
 
+import javax.naming.directory.AttributeInUseException;
+
 import org.hibernate.Session;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -12,32 +14,19 @@ import agh.sius.server.pojo.User;
 
 
 public class UserGroupDaoTest{
-	private UserGroupDao dao;
+	private DAO dao;
 	
     public UserGroupDaoTest() {
-        dao = new UserGroupDao();
+        dao = new DAO();
     }
     
     @BeforeClass
-    public static void before() {   	
-    	Session session = HibernateUtil.openSession();
-    	session.beginTransaction();
-    	session.createQuery("delete from Billing").executeUpdate();
-    	session.createQuery("delete from Group").executeUpdate();
-    	session.createQuery("delete from User").executeUpdate();
-    	session.getTransaction().commit();
-
-    	UserGroupDao dao = new UserGroupDao();
-    	dao.saveOrUpdateUser(new Group("grupa 1"));
-    	dao.saveOrUpdateUser(new Group("grupa 2"));
-    	dao.saveOrUpdateUser(new Group("agh sius"));
-    	
-    	dao.saveOrUpdateUser(new User("login", "name", "surname", "email", "password"));
-    	dao.saveOrUpdateUser(new User("login1", "name1", "surname1", "email1", "password1"));
-    	dao.saveOrUpdateUser(new User("login2", "name2", "surname2", "email2", "password2"));
-    	dao.saveOrUpdateUser(new User("login3", "name3", "surname3", "email3", "password3"));
-    	dao.saveOrUpdateUser(new User("login4", "name4", "surname4", "email4", "password4")); 	
-    	dao.saveOrUpdateUser(new User("user",   "name5", "surname5", "email5", "password5")); 
+    public static void before() {  
+    	DAO dao = new DAO();
+    	HelperDAO.clearDB();
+    	HelperDAO.createUsers(dao);  
+    	HelperDAO.createGroups(dao);  
+    	dao.resetSession();
     }
     
     @Test
@@ -54,11 +43,11 @@ public class UserGroupDaoTest{
     
     @Test(expected = org.hibernate.exception.ConstraintViolationException.class)
     public void uniqueLogin(){
-    	dao.saveOrUpdateUser(new User("login", "name", "surname", "email", "password"));
+    	dao.saveOrUpdate(new User("login", "name", "surname", "email", "password"));
     }
     
     @Test
-    public void addUserToGroup(){
+    public void addUserToGroup() throws AttributeInUseException{
     	Group group = dao.getGroups("agh sius").get(0);
     	Group group2 = dao.getGroups("grupa 2").get(0);
     	User user1 = dao.getUser("login");
@@ -74,8 +63,8 @@ public class UserGroupDaoTest{
     	group2.addUser(user3);
     	group2.addUser(user4);
     
-    	dao.saveOrUpdateUser(group);
-    	dao.saveOrUpdateUser(group2);
+    	dao.saveOrUpdate(group);
+    	dao.saveOrUpdate(group2);
     	dao.resetSession();
     	
     	group = dao.getGroups("agh sius").get(0);
