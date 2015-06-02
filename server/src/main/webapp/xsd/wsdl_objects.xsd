@@ -11,9 +11,21 @@
 
   <xs:element name="Product" type="tns:product"/>
 
+  <xs:element name="Response" type="tns:response"/>
+
+  <xs:element name="ResponseSimple" type="tns:responseSimple"/>
+
   <xs:element name="User" type="tns:user"/>
 
   <xs:element name="UserDetails" type="tns:userDetails"/>
+
+  <xs:complexType name="response">
+    <xs:sequence>
+      <xs:element name="operationStatus" type="tns:operationStatus" minOccurs="0"/>
+      <xs:element name="msg" type="xs:string" minOccurs="0"/>
+      <xs:element name="data" type="xs:anyType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
 
   <xs:complexType name="userDetails">
     <xs:sequence>
@@ -98,10 +110,10 @@
     <xs:sequence>
       <xs:element name="id" type="xs:ID" minOccurs="0"/>
       <xs:element name="msg" type="xs:string" minOccurs="0"/>
+      <xs:element name="title" type="xs:string" minOccurs="0"/>
       <xs:element name="state" type="tns:orderState" minOccurs="0"/>
       <xs:element name="date" type="xs:dateTime" minOccurs="0"/>
       <xs:element name="realizedBy" type="tns:user" minOccurs="0"/>
-      <xs:element name="group" type="tns:group" minOccurs="0"/>
       <xs:element name="products" minOccurs="0">
         <xs:complexType>
           <xs:sequence>
@@ -117,7 +129,6 @@
       <xs:element name="id" type="xs:ID" minOccurs="0"/>
       <xs:element name="name" type="xs:string" minOccurs="0"/>
       <xs:element name="cost" type="xs:decimal" minOccurs="0"/>
-      <xs:element name="order" type="xs:IDREF" minOccurs="0"/>
       <xs:element name="users" minOccurs="0">
         <xs:complexType>
           <xs:sequence>
@@ -128,6 +139,21 @@
       <xs:element name="maxUserPerProduct" type="xs:int"/>
     </xs:sequence>
   </xs:complexType>
+
+  <xs:complexType name="responseSimple">
+    <xs:sequence>
+      <xs:element name="operationStatus" type="tns:operationStatus" minOccurs="0"/>
+      <xs:element name="msg" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="operationStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SUCCEED"/>
+      <xs:enumeration value="WARN"/>
+      <xs:enumeration value="ERROR"/>
+    </xs:restriction>
+  </xs:simpleType>
 
   <xs:simpleType name="orderState">
     <xs:restriction base="xs:string">
