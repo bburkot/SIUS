@@ -1,6 +1,6 @@
 <?page title="Zamowienia" contentType="text/html;charset=UTF-8"?>
 <window id="groupPage" border="none"  style="min-width:650px;"
-	viewModel="@id('vm') @init('agh.sius.client.http.viewmodel.Group')" 
+	viewModel="@id('vm') @init('pl.edu.agh.sius.client.http.viewmodel.Group')" 
 	apply="org.zkoss.bind.BindComposer">
 	
 	<div width="100%" align="center">

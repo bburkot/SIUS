@@ -1,6 +1,6 @@
 <?page title="Widok grupy" contentType="text/html;charset=UTF-8"?>
 <window id="orderPage" border="none" style="min-width:650px;" 	
-	viewModel="@id('vm') @init('agh.sius.client.http.viewmodel.Order')" 
+	viewModel="@id('vm') @init('pl.edu.agh.sius.client.http.viewmodel.Order')" 
 	apply="org.zkoss.bind.BindComposer" >
 	
 	<div width="100%" align="center">

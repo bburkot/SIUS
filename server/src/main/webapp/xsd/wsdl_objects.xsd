@@ -1,38 +1,62 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema version="1.0" targetNamespace="http://www.agh.edu.pl/sius" xmlns:tns="http://www.agh.edu.pl/sius" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <xs:element name="Billing" type="tns:billing"/>
-
   <xs:element name="Group" type="tns:group"/>
 
   <xs:element name="GroupDetails" type="tns:groupDetails"/>
 
   <xs:element name="OrderDetails" type="tns:orderDetails"/>
 
+  <xs:element name="Payment" type="tns:payment"/>
+
   <xs:element name="Product" type="tns:product"/>
 
-  <xs:element name="Response" type="tns:response"/>
+  <xs:element name="ResponseGroupDetails" type="tns:responseGroupDetails"/>
+
+  <xs:element name="ResponseGroups" type="tns:responseGroups"/>
+
+  <xs:element name="ResponseOrderDetails" type="tns:responseOrderDetails"/>
+
+  <xs:element name="ResponsePayments" type="tns:responsePayments"/>
+
+  <xs:element name="ResponseProducts" type="tns:responseProducts"/>
 
   <xs:element name="ResponseSimple" type="tns:responseSimple"/>
+
+  <xs:element name="ResponseUser" type="tns:responseUser"/>
+
+  <xs:element name="ResponseUserDetails" type="tns:responseUserDetails"/>
 
   <xs:element name="User" type="tns:user"/>
 
   <xs:element name="UserDetails" type="tns:userDetails"/>
 
-  <xs:complexType name="response">
+  <xs:complexType name="responsePayments">
     <xs:sequence>
       <xs:element name="operationStatus" type="tns:operationStatus" minOccurs="0"/>
       <xs:element name="msg" type="xs:string" minOccurs="0"/>
-      <xs:element name="data" type="xs:anyType" minOccurs="0"/>
+      <xs:element name="payments" type="tns:payment" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="userDetails">
+  <xs:complexType name="payment">
     <xs:sequence>
       <xs:element name="id" type="xs:ID" minOccurs="0"/>
-      <xs:element name="name" type="xs:string" minOccurs="0"/>
-      <xs:element name="surname" type="xs:string" minOccurs="0"/>
+      <xs:element name="from" type="tns:user" minOccurs="0"/>
+      <xs:element name="to" type="tns:user" minOccurs="0"/>
+      <xs:element name="date" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="amount" type="xs:decimal" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="user">
+    <xs:sequence>
+      <xs:element name="id" type="xs:ID" minOccurs="0"/>
+      <xs:element name="login" type="xs:string" minOccurs="0"/>
+      <xs:element name="firstname" type="xs:string" minOccurs="0"/>
+      <xs:element name="lastname" type="xs:string" minOccurs="0"/>
       <xs:element name="email" type="xs:string" minOccurs="0"/>
+      <xs:element name="token" type="xs:string" minOccurs="0"/>
       <xs:element name="maxDept" type="xs:decimal" minOccurs="0"/>
       <xs:element name="groups" minOccurs="0">
         <xs:complexType>
@@ -41,7 +65,6 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="userBillings" type="tns:billing" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -52,57 +75,11 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="billing">
+  <xs:complexType name="responseOrderDetails">
     <xs:sequence>
-      <xs:element name="id" type="xs:ID" minOccurs="0"/>
-      <xs:element name="from" type="tns:user" minOccurs="0"/>
-      <xs:element name="to" type="tns:user" minOccurs="0"/>
-      <xs:element name="amount" type="xs:decimal" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="user">
-    <xs:sequence>
-      <xs:element name="id" type="xs:ID" minOccurs="0"/>
-      <xs:element name="name" type="xs:string" minOccurs="0"/>
-      <xs:element name="surname" type="xs:string" minOccurs="0"/>
-      <xs:element name="email" type="xs:string" minOccurs="0"/>
-      <xs:element name="maxDept" type="xs:decimal" minOccurs="0"/>
-      <xs:element name="groups" minOccurs="0">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="groups" type="tns:group" minOccurs="0" maxOccurs="unbounded"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="groupDetails">
-    <xs:sequence>
-      <xs:element name="id" type="xs:ID" minOccurs="0"/>
-      <xs:element name="name" type="xs:string" minOccurs="0"/>
-      <xs:element name="orders" minOccurs="0">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="orders" type="tns:orderDetails" minOccurs="0" maxOccurs="unbounded"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="memberUsers" minOccurs="0">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="memberUsers" type="tns:user" minOccurs="0" maxOccurs="unbounded"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="applicantUsers" minOccurs="0">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="applicantUsers" type="tns:user" minOccurs="0" maxOccurs="unbounded"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
+      <xs:element name="operationStatus" type="tns:operationStatus" minOccurs="0"/>
+      <xs:element name="msg" type="xs:string" minOccurs="0"/>
+      <xs:element name="orderDetails" type="tns:orderDetails" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -137,6 +114,105 @@
         </xs:complexType>
       </xs:element>
       <xs:element name="maxUserPerProduct" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="responseUserDetails">
+    <xs:sequence>
+      <xs:element name="operationStatus" type="tns:operationStatus" minOccurs="0"/>
+      <xs:element name="msg" type="xs:string" minOccurs="0"/>
+      <xs:element name="userDetails" type="tns:userDetails" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="userDetails">
+    <xs:sequence>
+      <xs:element name="id" type="xs:ID" minOccurs="0"/>
+      <xs:element name="login" type="xs:string" minOccurs="0"/>
+      <xs:element name="firstname" type="xs:string" minOccurs="0"/>
+      <xs:element name="lastname" type="xs:string" minOccurs="0"/>
+      <xs:element name="email" type="xs:string" minOccurs="0"/>
+      <xs:element name="token" type="xs:string" minOccurs="0"/>
+      <xs:element name="maxDept" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="groups" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="groups" type="tns:group" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="billings">
+    <xs:sequence>
+      <xs:element name="balance" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="first" type="tns:user" minOccurs="0"/>
+      <xs:element name="id" type="xs:string" minOccurs="0"/>
+      <xs:element name="maxFirstUserDebtToSecondUser" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="maxSecondUserDebtToFirstUser" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="payments" type="tns:payment" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="second" type="tns:user" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="responseGroups">
+    <xs:sequence>
+      <xs:element name="operationStatus" type="tns:operationStatus" minOccurs="0"/>
+      <xs:element name="msg" type="xs:string" minOccurs="0"/>
+      <xs:element name="groups" type="tns:group" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="responseUser">
+    <xs:sequence>
+      <xs:element name="operationStatus" type="tns:operationStatus" minOccurs="0"/>
+      <xs:element name="msg" type="xs:string" minOccurs="0"/>
+      <xs:element name="user" type="tns:user" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="responseGroupDetails">
+    <xs:sequence>
+      <xs:element name="operationStatus" type="tns:operationStatus" minOccurs="0"/>
+      <xs:element name="msg" type="xs:string" minOccurs="0"/>
+      <xs:element name="groupDetails" type="tns:groupDetails" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="groupDetails">
+    <xs:sequence>
+      <xs:element name="id" type="xs:ID" minOccurs="0"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="orders" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="orders" type="tns:orderDetails" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="memberUsers" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="memberUsers" type="tns:user" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="applicantUsers" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="applicantUsers" type="tns:user" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="responseProducts">
+    <xs:sequence>
+      <xs:element name="operationStatus" type="tns:operationStatus" minOccurs="0"/>
+      <xs:element name="msg" type="xs:string" minOccurs="0"/>
+      <xs:element name="products" type="tns:product" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 

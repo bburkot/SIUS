@@ -1,6 +1,6 @@
 <?page title="Edycja konta" contentType="text/html;charset=UTF-8"?>
 <window border="none" style="min-width:650px;" 
-	viewModel="@id('vm') @init('agh.sius.client.http.viewmodel.EditUser')" 
+	viewModel="@id('vm') @init('pl.edu.agh.sius.client.http.viewmodel.EditUser')" 
 	apply="org.zkoss.bind.BindComposer">
 	
 	<div width="100%" align="center">

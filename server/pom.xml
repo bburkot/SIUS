@@ -2,7 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>agh.sius</groupId>
+  <groupId>pl.agh.sius</groupId>
   <artifactId>server</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
@@ -38,8 +38,6 @@
 			<groupId>microsoft</groupId>
 			<artifactId>sqljdbc4</artifactId>
 			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/src/main/resources/sqljdbc4.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -69,6 +67,11 @@
 			<artifactId>cxf-rt-bindings-soap</artifactId>
 			<version>${cxf.version}</version>
 		</dependency>		
+<!-- 		<dependency>   -->
+<!-- 		    <groupId>org.apache.cxf</groupId>   -->
+<!-- 		    <artifactId>cxf-rt-transports-http-jetty</artifactId>   -->
+<!-- 		    <version>${cxf.version}</version>   -->
+<!-- 		</dependency>   -->
 	</dependencies>
 	
 	<build>
@@ -114,53 +117,74 @@
 				</plugin>
 <!-- 		TOMCAT -->
 				<plugin>
-						<groupId>org.apache.tomcat.maven</groupId>
-						<artifactId>tomcat7-maven-plugin</artifactId>
-						<version>2.2</version>
-						<configuration>
-							<url>http://${tomcat.address}/manager/text</url>
-							<server>TomcatTestServer</server>
-							<path>/${warname}</path>					
-							<username>${tomcat.user}</username>
-							<password>${tomcat.password}</password>					
-							<update>true</update>
-						</configuration>
-						<executions>
-							<execution>
-								<id>tomcat-start</id>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-							</execution>
-							<execution>
-								<id>tomcat-shutdown</id>
-								<goals>
-									<goal>shutdown</goal>
-								</goals>
-								<phase>post-integration-test</phase>
-							</execution>
-						</executions>
-					</plugin>		
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat7-maven-plugin</artifactId>
+					<version>2.2</version>
+					<configuration>
+						<url>http://${tomcat.address}/manager/text</url>
+						<server>TomcatTestServer</server>
+						<path>/${warname}</path>					
+						<username>${tomcat.user}</username>
+						<password>${tomcat.password}</password>					
+						<update>true</update>
+					</configuration>
+					<executions>
+						<execution>
+							<id>tomcat-start</id>
+							<phase>pre-integration-test</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>tomcat-shutdown</id>
+							<goals>
+								<goal>shutdown</goal>
+							</goals>
+							<phase>post-integration-test</phase>
+						</execution>
+					</executions>
+				</plugin>		
 					
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>xmlbeans-maven-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>generate-sources-xmlbeans</id>
-								<phase>generate-sources</phase>
-								<goals>
-									<goal>xmlbeans</goal>
-								</goals>
-							</execution>
-						</executions>
-						<version>2.3.3</version>
-						<inherited>true</inherited>
-						<configuration>
-							<schemaDirectory>${basedir}/src/main/webapp/xsd</schemaDirectory>
-						</configuration>
-					</plugin>	
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>xmlbeans-maven-plugin</artifactId>
+					<version>2.3.3</version>
+					
+					<executions>
+						<execution>
+							<id>generate-sources-xmlbeans</id>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>xmlbeans</goal>
+							</goals>
+						</execution>
+						<execution>
+							<goals>
+								<goal>schemagen</goal>
+							</goals>
+								<phase>generate-resources</phase>
+								<configuration>
+									<includes>
+										<include>agh/sius/server/pojo/xsd/*.java</include>
+									</includes>
+									<outputDirectory>${basedir}/src/main/resources</outputDirectory>
+							</configuration>
+						</execution>
+					</executions>
+					
+					<inherited>true</inherited>
+					<configuration>
+						<schemaDirectory>${basedir}/src/main/webapp/xsd</schemaDirectory>
+						<transformSchemas>
+	                        <transformSchema>
+	                            <uri>http://www.agh.edu.pl/sius</uri>
+	                            <toFile>wsdl_objects.xsd</toFile>
+	                        </transformSchema>
+	                    </transformSchemas>
+					</configuration>
+				</plugin>	
+ 								
 			</plugins>
 		</pluginManagement>
 	</build>

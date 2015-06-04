@@ -11,6 +11,6 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
 
 	<jaxws:endpoint id="userService"
-		implementor="agh.sius.server.service.impl.WServiceImpl" address="/Service.wsdl" />
+		implementor="pl.edu.agh.sius.server.service.impl.WServiceImpl" address="/Service.wsdl" />
 
 </beans>
