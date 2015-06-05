@@ -71,7 +71,6 @@ public class WServiceImpl implements WService {
 		ResponseUser response = new ResponseUser();
 		if (user != null){
 			user.setToken( generateToken() );
-			System.out.println(user + " group size " + user.getGroups().size());
 			response.setUser(user);	
 			response.succeed();
 		}
@@ -171,10 +170,10 @@ public class WServiceImpl implements WService {
 		if (groupDetails == null)
 			return response;
 		
-		System.out.println("accept server " + newUser.getId());
-		for (User u : groupDetails.getApplicantUsers()){
-			System.out.println("applicant " + u.getId());
-		}
+//		System.out.println("accept server " + newUser.getId());
+//		for (User u : groupDetails.getApplicantUsers()){
+//			System.out.println("applicant " + u.getId());
+//		}
 		
 		if ( !groupDetails.getApplicantUsers().contains(newUser)){
 			response.setMsg("Dany urzytkownik nie aplikuje do danej grupy");
@@ -243,9 +242,9 @@ public class WServiceImpl implements WService {
 			
 			response.setGroupDetails(groupDetails);
 			response.succeed();
-			for (OrderDetails o : groupDetails.getOrders())
-				System.out.print(o.getId() + " ");
-			System.out.println("send " + groupDetails.getOrders().size());
+//			for (OrderDetails o : groupDetails.getOrders())
+//				System.out.print(o.getId() + " ");
+//			System.out.println("send " + groupDetails.getOrders().size());
 		} else
 			response.setMsg("Group with id= " + groupID + " not exists");
 		return response;
@@ -265,7 +264,7 @@ public class WServiceImpl implements WService {
 		}
 		
 		GroupDetails groupDetails = new GroupDetails(newGroup, dboUser);
-		System.out.println("server " + groupDetails);
+//		System.out.println("server " + groupDetails);
 		String err = dao.saveOrUpdate(groupDetails);
 		
 		if (err == null){
@@ -658,10 +657,10 @@ public class WServiceImpl implements WService {
 		
 		List<Billings> billings = dao.getUserBillings(dboUser);
 		List<Balance> balances = new ArrayList<>();
-		System.out.println("get balance for " + dboUser.getId() );
+//		System.out.println("get balance for " + dboUser.getId() );
 		for (Billings b : billings)
 			if (b.getBalance().compareTo(BigDecimal.ZERO) != 0){
-				System.out.println(b.getFirst().getId() + " " + b.getSecond().getId() + " " + b.getBalance());
+//				System.out.println(b.getFirst().getId() + " " + b.getSecond().getId() + " " + b.getBalance());
 				if ( b.getFirst().getId().equals(dboUser.getId()) )
 					balances.add(new Balance(b.getSecond(), b.getBalance()));
 				else

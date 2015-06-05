@@ -1,0 +1,846 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="WServiceImplService" targetNamespace="http://www.agh.edu.pl/sius" xmlns:ns1="http://cxf.apache.org/bindings/xformat" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.agh.edu.pl/sius" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://www.agh.edu.pl/sius" xmlns:tns="http://www.agh.edu.pl/sius" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="Balance" type="tns:balance" />
+<xs:element name="Group" type="tns:group" />
+<xs:element name="GroupDetails" type="tns:groupDetails" />
+<xs:element name="OrderDetails" type="tns:orderDetails" />
+<xs:element name="Payment" type="tns:payment" />
+<xs:element name="Product" type="tns:product" />
+<xs:element name="ResponseBalances" type="tns:responseBalances" />
+<xs:element name="ResponseGroupDetails" type="tns:responseGroupDetails" />
+<xs:element name="ResponseGroups" type="tns:responseGroups" />
+<xs:element name="ResponseOrderDetails" type="tns:responseOrderDetails" />
+<xs:element name="ResponsePayments" type="tns:responsePayments" />
+<xs:element name="ResponseProduct" type="tns:responseProduct" />
+<xs:element name="ResponseProducts" type="tns:responseProducts" />
+<xs:element name="ResponseSimple" type="tns:responseSimple" />
+<xs:element name="ResponseUser" type="tns:responseUser" />
+<xs:element name="ResponseUserDetails" type="tns:responseUserDetails" />
+<xs:element name="User" type="tns:user" />
+<xs:element name="UserDetails" type="tns:userDetails" />
+<xs:complexType name="user">
+<xs:sequence>
+<xs:element minOccurs="0" name="id" type="xs:ID" />
+<xs:element minOccurs="0" name="login" type="xs:string" />
+<xs:element minOccurs="0" name="firstname" type="xs:string" />
+<xs:element minOccurs="0" name="lastname" type="xs:string" />
+<xs:element minOccurs="0" name="email" type="xs:string" />
+<xs:element minOccurs="0" name="token" type="xs:string" />
+<xs:element minOccurs="0" name="maxDept" type="xs:decimal" />
+<xs:element minOccurs="0" name="groups">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="groups" type="tns:group" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="group">
+<xs:sequence>
+<xs:element minOccurs="0" name="id" type="xs:ID" />
+<xs:element minOccurs="0" name="name" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="responseGroupDetails">
+<xs:sequence>
+<xs:element minOccurs="0" name="operationStatus" type="tns:operationStatus" />
+<xs:element minOccurs="0" name="msg" type="xs:string" />
+<xs:element minOccurs="0" name="groupDetails" type="tns:groupDetails" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="groupDetails">
+<xs:sequence>
+<xs:element minOccurs="0" name="id" type="xs:ID" />
+<xs:element minOccurs="0" name="name" type="xs:string" />
+<xs:element minOccurs="0" name="orders">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="orders" type="tns:orderDetails" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element minOccurs="0" name="memberUsers">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="memberUsers" type="tns:user" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element minOccurs="0" name="applicantUsers">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="applicantUsers" type="tns:user" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="orderDetails">
+<xs:sequence>
+<xs:element minOccurs="0" name="id" type="xs:ID" />
+<xs:element minOccurs="0" name="msg" type="xs:string" />
+<xs:element minOccurs="0" name="title" type="xs:string" />
+<xs:element minOccurs="0" name="state" type="tns:orderState" />
+<xs:element minOccurs="0" name="date" type="xs:dateTime" />
+<xs:element minOccurs="0" name="realizedBy" type="tns:user" />
+<xs:element minOccurs="0" name="products">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="products" type="tns:product" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="product">
+<xs:sequence>
+<xs:element minOccurs="0" name="id" type="xs:ID" />
+<xs:element minOccurs="0" name="name" type="xs:string" />
+<xs:element minOccurs="0" name="cost" type="xs:decimal" />
+<xs:element minOccurs="0" name="users">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="users" type="tns:user" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="maxUserPerProduct" type="xs:int" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="responseOrderDetails">
+<xs:sequence>
+<xs:element minOccurs="0" name="operationStatus" type="tns:operationStatus" />
+<xs:element minOccurs="0" name="msg" type="xs:string" />
+<xs:element minOccurs="0" name="orderDetails" type="tns:orderDetails" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="responseSimple">
+<xs:sequence>
+<xs:element minOccurs="0" name="operationStatus" type="tns:operationStatus" />
+<xs:element minOccurs="0" name="msg" type="xs:string" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="responseProduct">
+<xs:sequence>
+<xs:element minOccurs="0" name="operationStatus" type="tns:operationStatus" />
+<xs:element minOccurs="0" name="msg" type="xs:string" />
+<xs:element minOccurs="0" name="products" type="tns:product" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="responseBalances">
+<xs:sequence>
+<xs:element minOccurs="0" name="operationStatus" type="tns:operationStatus" />
+<xs:element minOccurs="0" name="msg" type="xs:string" />
+<xs:element maxOccurs="unbounded" minOccurs="0" name="balances" type="tns:balance" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="balance">
+<xs:sequence>
+<xs:element minOccurs="0" name="user" type="tns:user" />
+<xs:element minOccurs="0" name="balance" type="xs:decimal" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="responseUser">
+<xs:sequence>
+<xs:element minOccurs="0" name="operationStatus" type="tns:operationStatus" />
+<xs:element minOccurs="0" name="msg" type="xs:string" />
+<xs:element minOccurs="0" name="user" type="tns:user" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="responseGroups">
+<xs:sequence>
+<xs:element minOccurs="0" name="operationStatus" type="tns:operationStatus" />
+<xs:element minOccurs="0" name="msg" type="xs:string" />
+<xs:element maxOccurs="unbounded" minOccurs="0" name="groups" type="tns:group" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="responsePayments">
+<xs:sequence>
+<xs:element minOccurs="0" name="operationStatus" type="tns:operationStatus" />
+<xs:element minOccurs="0" name="msg" type="xs:string" />
+<xs:element maxOccurs="unbounded" minOccurs="0" name="payments" type="tns:payment" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="payment">
+<xs:sequence>
+<xs:element minOccurs="0" name="id" type="xs:ID" />
+<xs:element minOccurs="0" name="from" type="tns:user" />
+<xs:element minOccurs="0" name="to" type="tns:user" />
+<xs:element minOccurs="0" name="date" type="xs:dateTime" />
+<xs:element minOccurs="0" name="amount" type="xs:decimal" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="responseProducts">
+<xs:sequence>
+<xs:element minOccurs="0" name="operationStatus" type="tns:operationStatus" />
+<xs:element minOccurs="0" name="msg" type="xs:string" />
+<xs:element maxOccurs="unbounded" minOccurs="0" name="products" type="tns:product" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="responseUserDetails">
+<xs:sequence>
+<xs:element minOccurs="0" name="operationStatus" type="tns:operationStatus" />
+<xs:element minOccurs="0" name="msg" type="xs:string" />
+<xs:element minOccurs="0" name="userDetails" type="tns:userDetails" />
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="userDetails">
+<xs:sequence>
+<xs:element minOccurs="0" name="id" type="xs:ID" />
+<xs:element minOccurs="0" name="login" type="xs:string" />
+<xs:element minOccurs="0" name="firstname" type="xs:string" />
+<xs:element minOccurs="0" name="lastname" type="xs:string" />
+<xs:element minOccurs="0" name="email" type="xs:string" />
+<xs:element minOccurs="0" name="token" type="xs:string" />
+<xs:element minOccurs="0" name="maxDept" type="xs:decimal" />
+<xs:element minOccurs="0" name="groups">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="groups" type="tns:group" />
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="operationStatus">
+<xs:restriction base="xs:string">
+<xs:enumeration value="SUCCEED" />
+<xs:enumeration value="WARN" />
+<xs:enumeration value="ERROR" />
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="orderState">
+<xs:restriction base="xs:string">
+<xs:enumeration value="OPEN" />
+<xs:enumeration value="IN_PROGRES" />
+<xs:enumeration value="REALIZED" />
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="String" nillable="true" type="xs:string" />
+<xs:element name="UserLogout" nillable="true" type="tns:user" />
+<xs:element name="UserBalances" nillable="true" type="tns:user" />
+<xs:element name="Money" nillable="true" type="xs:decimal" />
+<xs:element name="UserRegister" nillable="true" type="tns:user" />
+<xs:element name="UserPayments" nillable="true" type="tns:user" />
+<xs:element name="UserProducts" nillable="true" type="tns:user" />
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getUserDetailsResponse">
+    <wsdl:part element="tns:ResponseUserDetails" name="ResponseUserDetails">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getGroupDetails">
+    <wsdl:part element="tns:String" name="GroupID">
+    </wsdl:part>
+    <wsdl:part element="tns:User" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="joinToProductResponse">
+    <wsdl:part element="tns:ResponseSimple" name="ResponseSimple">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="findGroup">
+    <wsdl:part element="tns:String" name="GroupNamePattern">
+    </wsdl:part>
+    <wsdl:part element="tns:User" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getUsersBalancesResponse">
+    <wsdl:part element="tns:ResponseBalances" name="ResponseBalances">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="applicateToGroupResponse">
+    <wsdl:part element="tns:ResponseSimple" name="ResponseSimple">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="login">
+    <wsdl:part element="tns:String" name="UserLogin">
+    </wsdl:part>
+    <wsdl:part element="tns:String" name="UserPassword">
+    </wsdl:part>
+    <wsdl:part element="tns:String" name="AuthorizationProvider">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="joinToProduct">
+    <wsdl:part element="tns:String" name="ProductID">
+    </wsdl:part>
+    <wsdl:part element="tns:User" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cancelPaymentResponse">
+    <wsdl:part element="tns:ResponseSimple" name="ResponseSimple">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getUserPaymentsResponse">
+    <wsdl:part element="tns:ResponsePayments" name="ResponsePayments">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="registerUserResponse">
+    <wsdl:part element="tns:ResponseSimple" name="ResponseSimple">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="logoutResponse">
+    <wsdl:part element="tns:ResponseSimple" name="ResponseSimple">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getProductsOrderedByUser">
+    <wsdl:part element="tns:UserProducts" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="payMoneyResponse">
+    <wsdl:part element="tns:ResponseSimple" name="ResponseSimple">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getOrderDetails">
+    <wsdl:part element="tns:String" name="OrderID">
+    </wsdl:part>
+    <wsdl:part element="tns:User" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="findGroupResponse">
+    <wsdl:part element="tns:ResponseGroups" name="ResponseGroups">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="closeOrderResponse">
+    <wsdl:part element="tns:ResponseSimple" name="ResponseSimple">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="acceptPaymentResponse">
+    <wsdl:part element="tns:ResponseSimple" name="ResponseSimple">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getOrderDetailsResponse">
+    <wsdl:part element="tns:ResponseOrderDetails" name="ResponseOrderDetails">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="newProductInOrderResponse">
+    <wsdl:part element="tns:ResponseProduct" name="ResponseProduct">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getUserPayments">
+    <wsdl:part element="tns:UserPayments" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeUserFromGroupResponse">
+    <wsdl:part element="tns:ResponseSimple" name="ResponseSimple">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addGroup">
+    <wsdl:part element="tns:Group" name="Group">
+    </wsdl:part>
+    <wsdl:part element="tns:User" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="applicateToGroup">
+    <wsdl:part element="tns:String" name="GroupID">
+    </wsdl:part>
+    <wsdl:part element="tns:User" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addOrder">
+    <wsdl:part element="tns:String" name="GroupID">
+    </wsdl:part>
+    <wsdl:part element="tns:OrderDetails" name="OrderDetails">
+    </wsdl:part>
+    <wsdl:part element="tns:User" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="acceptApplication">
+    <wsdl:part element="tns:String" name="acceptUserId">
+    </wsdl:part>
+    <wsdl:part element="tns:String" name="GroupID">
+    </wsdl:part>
+    <wsdl:part element="tns:User" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getUserDetails">
+    <wsdl:part element="tns:User" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cancelUserFromProductResponse">
+    <wsdl:part element="tns:ResponseSimple" name="ResponseSimple">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getUsersBalances">
+    <wsdl:part element="tns:UserBalances" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="closeOrder">
+    <wsdl:part element="tns:String" name="OrderID">
+    </wsdl:part>
+    <wsdl:part element="tns:User" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="changeDeptResponse">
+    <wsdl:part element="tns:ResponseSimple" name="ResponseSimple">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getGroupDetailsResponse">
+    <wsdl:part element="tns:ResponseGroupDetails" name="ResponseGroupDetails">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateUser">
+    <wsdl:part element="tns:User" name="User">
+    </wsdl:part>
+    <wsdl:part element="tns:String" name="UserPassword">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateUserResponse">
+    <wsdl:part element="tns:ResponseSimple" name="ResponseSimple">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="logout">
+    <wsdl:part element="tns:UserLogout" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="payMoney">
+    <wsdl:part element="tns:String" name="StringID">
+    </wsdl:part>
+    <wsdl:part element="tns:Money" name="Amount">
+    </wsdl:part>
+    <wsdl:part element="tns:User" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addGroupResponse">
+    <wsdl:part element="tns:ResponseGroupDetails" name="ResponseGroupDetails">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cancelPayment">
+    <wsdl:part element="tns:String" name="StringID">
+    </wsdl:part>
+    <wsdl:part element="tns:User" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeUserFromGroup">
+    <wsdl:part element="tns:String" name="removeUserId">
+    </wsdl:part>
+    <wsdl:part element="tns:String" name="GroupID">
+    </wsdl:part>
+    <wsdl:part element="tns:User" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="newProductInOrder">
+    <wsdl:part element="tns:String" name="OrderID">
+    </wsdl:part>
+    <wsdl:part element="tns:Product" name="Product">
+    </wsdl:part>
+    <wsdl:part element="tns:User" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addOrderResponse">
+    <wsdl:part element="tns:ResponseOrderDetails" name="ResponseOrderDetails">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="acceptApplicationResponse">
+    <wsdl:part element="tns:ResponseSimple" name="ResponseSimple">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getProductsOrderedByUserResponse">
+    <wsdl:part element="tns:ResponseProducts" name="ResponseProducts">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="changeDept">
+    <wsdl:part element="tns:String" name="UserID">
+    </wsdl:part>
+    <wsdl:part element="tns:Money" name="NewUserMaxDept">
+    </wsdl:part>
+    <wsdl:part element="tns:User" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="loginResponse">
+    <wsdl:part element="tns:ResponseUser" name="ResponseUser">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="acceptPayment">
+    <wsdl:part element="tns:String" name="StringID">
+    </wsdl:part>
+    <wsdl:part element="tns:User" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cancelUserFromProduct">
+    <wsdl:part element="tns:String" name="UserID">
+    </wsdl:part>
+    <wsdl:part element="tns:String" name="ProductID">
+    </wsdl:part>
+    <wsdl:part element="tns:User" name="User">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="registerUser">
+    <wsdl:part element="tns:UserRegister" name="User">
+    </wsdl:part>
+    <wsdl:part element="tns:String" name="UserPassword">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="WService">
+    <wsdl:operation name="getGroupDetails">
+      <wsdl:input message="tns:getGroupDetails" name="getGroupDetails">
+    </wsdl:input>
+      <wsdl:output message="tns:getGroupDetailsResponse" name="getGroupDetailsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addOrder">
+      <wsdl:input message="tns:addOrder" name="addOrder">
+    </wsdl:input>
+      <wsdl:output message="tns:addOrderResponse" name="addOrderResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addGroup">
+      <wsdl:input message="tns:addGroup" name="addGroup">
+    </wsdl:input>
+      <wsdl:output message="tns:addGroupResponse" name="addGroupResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="removeUserFromGroup">
+      <wsdl:input message="tns:removeUserFromGroup" name="removeUserFromGroup">
+    </wsdl:input>
+      <wsdl:output message="tns:removeUserFromGroupResponse" name="removeUserFromGroupResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="logout">
+      <wsdl:input message="tns:logout" name="logout">
+    </wsdl:input>
+      <wsdl:output message="tns:logoutResponse" name="logoutResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cancelUserFromProduct">
+      <wsdl:input message="tns:cancelUserFromProduct" name="cancelUserFromProduct">
+    </wsdl:input>
+      <wsdl:output message="tns:cancelUserFromProductResponse" name="cancelUserFromProductResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="newProductInOrder">
+      <wsdl:input message="tns:newProductInOrder" name="newProductInOrder">
+    </wsdl:input>
+      <wsdl:output message="tns:newProductInOrderResponse" name="newProductInOrderResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUsersBalances">
+      <wsdl:input message="tns:getUsersBalances" name="getUsersBalances">
+    </wsdl:input>
+      <wsdl:output message="tns:getUsersBalancesResponse" name="getUsersBalancesResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOrderDetails">
+      <wsdl:input message="tns:getOrderDetails" name="getOrderDetails">
+    </wsdl:input>
+      <wsdl:output message="tns:getOrderDetailsResponse" name="getOrderDetailsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="changeDept">
+      <wsdl:input message="tns:changeDept" name="changeDept">
+    </wsdl:input>
+      <wsdl:output message="tns:changeDeptResponse" name="changeDeptResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <wsdl:input message="tns:login" name="login">
+    </wsdl:input>
+      <wsdl:output message="tns:loginResponse" name="loginResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="registerUser">
+      <wsdl:input message="tns:registerUser" name="registerUser">
+    </wsdl:input>
+      <wsdl:output message="tns:registerUserResponse" name="registerUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findGroup">
+      <wsdl:input message="tns:findGroup" name="findGroup">
+    </wsdl:input>
+      <wsdl:output message="tns:findGroupResponse" name="findGroupResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="applicateToGroup">
+      <wsdl:input message="tns:applicateToGroup" name="applicateToGroup">
+    </wsdl:input>
+      <wsdl:output message="tns:applicateToGroupResponse" name="applicateToGroupResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUserPayments">
+      <wsdl:input message="tns:getUserPayments" name="getUserPayments">
+    </wsdl:input>
+      <wsdl:output message="tns:getUserPaymentsResponse" name="getUserPaymentsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="acceptPayment">
+      <wsdl:input message="tns:acceptPayment" name="acceptPayment">
+    </wsdl:input>
+      <wsdl:output message="tns:acceptPaymentResponse" name="acceptPaymentResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProductsOrderedByUser">
+      <wsdl:input message="tns:getProductsOrderedByUser" name="getProductsOrderedByUser">
+    </wsdl:input>
+      <wsdl:output message="tns:getProductsOrderedByUserResponse" name="getProductsOrderedByUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="payMoney">
+      <wsdl:input message="tns:payMoney" name="payMoney">
+    </wsdl:input>
+      <wsdl:output message="tns:payMoneyResponse" name="payMoneyResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUserDetails">
+      <wsdl:input message="tns:getUserDetails" name="getUserDetails">
+    </wsdl:input>
+      <wsdl:output message="tns:getUserDetailsResponse" name="getUserDetailsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateUser">
+      <wsdl:input message="tns:updateUser" name="updateUser">
+    </wsdl:input>
+      <wsdl:output message="tns:updateUserResponse" name="updateUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="closeOrder">
+      <wsdl:input message="tns:closeOrder" name="closeOrder">
+    </wsdl:input>
+      <wsdl:output message="tns:closeOrderResponse" name="closeOrderResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cancelPayment">
+      <wsdl:input message="tns:cancelPayment" name="cancelPayment">
+    </wsdl:input>
+      <wsdl:output message="tns:cancelPaymentResponse" name="cancelPaymentResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="acceptApplication">
+      <wsdl:input message="tns:acceptApplication" name="acceptApplication">
+    </wsdl:input>
+      <wsdl:output message="tns:acceptApplicationResponse" name="acceptApplicationResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="joinToProduct">
+      <wsdl:input message="tns:joinToProduct" name="joinToProduct">
+    </wsdl:input>
+      <wsdl:output message="tns:joinToProductResponse" name="joinToProductResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WServiceImplServiceSoapBinding" type="tns:WService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getGroupDetails">
+      <soap:operation soapAction="getGroupDetails" style="document" />
+      <wsdl:input name="getGroupDetails">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getGroupDetailsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addOrder">
+      <soap:operation soapAction="addOrder" style="document" />
+      <wsdl:input name="addOrder">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="addOrderResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addGroup">
+      <soap:operation soapAction="addGroup" style="document" />
+      <wsdl:input name="addGroup">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="addGroupResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="logout">
+      <soap:operation soapAction="logout" style="document" />
+      <wsdl:input name="logout">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="logoutResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="removeUserFromGroup">
+      <soap:operation soapAction="removeUserFromGroup" style="document" />
+      <wsdl:input name="removeUserFromGroup">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="removeUserFromGroupResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cancelUserFromProduct">
+      <soap:operation soapAction="cancelUserFromProduct" style="document" />
+      <wsdl:input name="cancelUserFromProduct">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="cancelUserFromProductResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="newProductInOrder">
+      <soap:operation soapAction="newProductInOrder" style="document" />
+      <wsdl:input name="newProductInOrder">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="newProductInOrderResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUsersBalances">
+      <soap:operation soapAction="getUsersBalances" style="document" />
+      <wsdl:input name="getUsersBalances">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getUsersBalancesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOrderDetails">
+      <soap:operation soapAction="getOrderDetails" style="document" />
+      <wsdl:input name="getOrderDetails">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getOrderDetailsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="changeDept">
+      <soap:operation soapAction="changeDept" style="document" />
+      <wsdl:input name="changeDept">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="changeDeptResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <soap:operation soapAction="login" style="document" />
+      <wsdl:input name="login">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="loginResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="registerUser">
+      <soap:operation soapAction="registerUser" style="document" />
+      <wsdl:input name="registerUser">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="registerUserResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="applicateToGroup">
+      <soap:operation soapAction="applicateToGroup" style="document" />
+      <wsdl:input name="applicateToGroup">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="applicateToGroupResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findGroup">
+      <soap:operation soapAction="findGroup" style="document" />
+      <wsdl:input name="findGroup">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findGroupResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUserPayments">
+      <soap:operation soapAction="getUserPayments" style="document" />
+      <wsdl:input name="getUserPayments">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getUserPaymentsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="acceptPayment">
+      <soap:operation soapAction="acceptPayment" style="document" />
+      <wsdl:input name="acceptPayment">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="acceptPaymentResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProductsOrderedByUser">
+      <soap:operation soapAction="getProductsOrderedByUser" style="document" />
+      <wsdl:input name="getProductsOrderedByUser">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getProductsOrderedByUserResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUserDetails">
+      <soap:operation soapAction="getUserDetails" style="document" />
+      <wsdl:input name="getUserDetails">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getUserDetailsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="payMoney">
+      <soap:operation soapAction="payMoney" style="document" />
+      <wsdl:input name="payMoney">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="payMoneyResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateUser">
+      <soap:operation soapAction="updateUser" style="document" />
+      <wsdl:input name="updateUser">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateUserResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="closeOrder">
+      <soap:operation soapAction="closeOrder" style="document" />
+      <wsdl:input name="closeOrder">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="closeOrderResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cancelPayment">
+      <soap:operation soapAction="cancelPayment" style="document" />
+      <wsdl:input name="cancelPayment">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="cancelPaymentResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="acceptApplication">
+      <soap:operation soapAction="acceptApplication" style="document" />
+      <wsdl:input name="acceptApplication">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="acceptApplicationResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="joinToProduct">
+      <soap:operation soapAction="joinToProduct" style="document" />
+      <wsdl:input name="joinToProduct">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="joinToProductResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WServiceImplService">
+    <wsdl:port binding="tns:WServiceImplServiceSoapBinding" name="WServicePort">
+      <soap:address location="http://localhost:8080/server/Service.wsdl" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
