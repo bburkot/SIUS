@@ -1,25 +1,28 @@
 
-package pl.edu.agh.sius.server;
+package pl.edu.agh.sius.server.responses;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
+import pl.edu.agh.sius.OperationStatus;
+import pl.edu.agh.sius.User;
+
 
 /**
- * <p>Java class for responseOrderDetails complex type.
+ * <p>Java class for responseUser complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="responseOrderDetails"&gt;
+ * &lt;complexType name="responseUser"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element name="operationStatus" type="{http://www.agh.edu.pl/sius}operationStatus" minOccurs="0"/&gt;
  *         &lt;element name="msg" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="orderDetails" type="{http://www.agh.edu.pl/sius}orderDetails" minOccurs="0"/&gt;
+ *         &lt;element name="user" type="{http://www.agh.edu.pl/sius}user" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -29,17 +32,17 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "responseOrderDetails", propOrder = {
+@XmlType(name = "responseUser", propOrder = {
     "operationStatus",
     "msg",
-    "orderDetails"
+    "user"
 })
-public class ResponseOrderDetails {
+public class ResponseUser {
 
     @XmlSchemaType(name = "string")
     protected OperationStatus operationStatus;
     protected String msg;
-    protected OrderDetails orderDetails;
+    protected User user;
 
     /**
      * Gets the value of the operationStatus property.
@@ -90,27 +93,27 @@ public class ResponseOrderDetails {
     }
 
     /**
-     * Gets the value of the orderDetails property.
+     * Gets the value of the user property.
      * 
      * @return
      *     possible object is
-     *     {@link OrderDetails }
+     *     {@link User }
      *     
      */
-    public OrderDetails getOrderDetails() {
-        return orderDetails;
+    public User getUser() {
+        return user;
     }
 
     /**
-     * Sets the value of the orderDetails property.
+     * Sets the value of the user property.
      * 
      * @param value
      *     allowed object is
-     *     {@link OrderDetails }
+     *     {@link User }
      *     
      */
-    public void setOrderDetails(OrderDetails value) {
-        this.orderDetails = value;
+    public void setUser(User value) {
+        this.user = value;
     }
 
 }

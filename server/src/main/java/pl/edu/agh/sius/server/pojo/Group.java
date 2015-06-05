@@ -1,14 +1,12 @@
 package pl.edu.agh.sius.server.pojo;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -30,7 +28,6 @@ public class Group implements Serializable{
 	@XmlID
 	@Id
 	@XmlElement	
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition="int")
 	private String id;
 	
@@ -42,7 +39,7 @@ public class Group implements Serializable{
 	@JoinTable (name = "member_group",
 		joinColumns = { @JoinColumn(name="group_id") },
 		inverseJoinColumns = { @JoinColumn(name="user_id") })
-	private List<User> memberUsers;
+	private Set<User> memberUsers;
 
 	public String getId() {
 		return id;

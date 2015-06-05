@@ -8,11 +8,11 @@
 			<include src="header.zul"></include>
 		</div>
 		
-		<grid  mold="paging" pageSize="10" width="600px" style="margin-bottom:20px;">
+		<grid  mold="paging" model="@load(vm.balances)" pageSize="10" width="600px" style="margin-bottom:20px;">
 			<auxhead>
-				<auxheader colspan="4" align="center">
-					<label value="Płatności" zclass="z-auxheader-content" style="margin-left:200px;"/>
-					<button label="szczegóły" style="margin-left:200px;" onClick="@command('billings')"/>
+				<auxheader colspan="4" align="center" label="Płatności">
+<!-- 					<label value="Płatności" zclass="z-auxheader-content" style="margin-left:200px;"/> -->
+<!-- 					<button label="szczegóły" style="margin-left:200px;" onClick="@command('billings')"/> -->
 				</auxheader>
 			</auxhead>	
 			<columns visible="true">
@@ -22,28 +22,25 @@
 				<column align="center"/>
 			</columns>
 			<rows> 
-				<row>
-					<label value="Jan Nowak"/>
-					<label value="mail"/>
-					<label value="50zł."/>
-					<button label="Zapłać" onClick="@command('pay', val=null)"/>
-				</row>
-				<row>
-					<label value="Jan Kowalski"/>
-					<label value="mail2"/>
-					<label value="-10 zł."/>
-					<cell><button label="Zapłać" visible="false"/></cell>
-				</row>
-				<row>
-					<label value="Michał Kowalski"/>
-					<label value="mail3"/>
-					<label value="-10 zł."/>
-					<cell><button label="Zapłać" visible="false"/></cell>				
-				</row>
+				<template name="model">
+					<row>
+						<label value="${each.user.firstname} ${each.user.lastname}"/>
+						<label value="@load(each.user.email)"/>
+						<label value="${each.balance} zł"/>
+						<cell><button label="Zapłać" onClick="@command('showPay', val=each)"
+							visible="@load(vm.isLessThanZero(each.balance))"/></cell>	
+					</row>				
+				</template>
+<!-- 				<row> -->
+<!-- 					<label value="Michał Kowalski"/> -->
+<!-- 					<label value="mail3"/> -->
+<!-- 					<label value="-10 zł."/> -->
+<!-- 					<cell><button label="Zapłać" visible="false"/></cell>				 -->
+<!-- 				</row> -->
 			</rows>					
 		</grid>		
 		
-		<grid  mold="paging" pageSize="10" width="600px" style="margin-bottom:20px;">
+		<grid  mold="paging" model="@load(vm.acceptPayment)"  pageSize="10" width="600px" style="margin-bottom:20px;">
 			<auxhead>
 				<auxheader colspan="4" align="center" label="Księgowość"/>
 			</auxhead>	
@@ -54,48 +51,22 @@
 				<column align="center"/>
 			</columns>
 			<rows> 
-				<row>
-					<label value="Jan Kowalski"/>
-					<label value="mail2"/>
-					<label value="100 zł."/>
-					<button label="Potwierdz"/>
-				</row>
-				<row>
-					<label value="Michał Kowalski"/>
-					<label value="mail3"/>
-					<label value="50 zł."/>
-					<button label="Potwierdz"/>
-				</row>
+				<template name="model">
+					<row>
+						<label value="${each.from.firstname} ${each.from.lastname}"/> 
+						<label value="@load(each.from.email)"/>
+						<label value="@load(each.amount)"/>
+						<button label="Potwierdz" onClick="@command('acceptPayment', val=each.id )"/>				
+					</row>
+				</template>
+
+<!-- 				<row> -->
+<!-- 					<label value="Michał Kowalski"/> -->
+<!-- 					<label value="mail3"/> -->
+<!-- 					<label value="50 zł."/> -->
+<!-- 					<button label="Potwierdz"/> -->
+<!-- 				</row> -->
 			</rows>					
 		</grid>			
-
-		<grid  mold="paging" pageSize="15" width="600px" style="margin-bottom:20px;">
-			<auxhead>
-				<auxheader label="Moje zamówienia" colspan="5" align="center"/>
-			</auxhead>	
-			<columns visible="true">
-				<column align="center" label="Nazwa produktu" />
-				<column align="center" label="Data zamówienia" width="120px"/>
-				<column align="center" label="szt." width="60px"/>
-				<column align="center" label="Wartość" width="100px"/>
-				<column align="center" label="Zrealizował"/>
-			</columns>
-			<rows> 
-				<row>
-					<label value="Pizza"/>
-					<label value="2001-04-10"/>
-					<label value="1"/>
-					<label value="10 zł."/>
-					<label value="Jan Kowalski"/>
-				</row>
-				<row>
-					<label value="Pizza"/>
-					<label value="2001-04-10"/>
-					<label value="0.33"/>
-					<label value="4 zł."/>
-					<label value="Jan Kowalski"/>
-				</row>
-			</rows>					
-		</grid>	
 	</div>
 </window>

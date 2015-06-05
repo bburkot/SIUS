@@ -1,0 +1,47 @@
+<window title="Rejestracja" border="normal" closable="true" action="show: slideDown;hide: slideUp" width="500px"> 
+<!-- viewModel="@id('vm') @init('pl.edu.agh.sius.client.http.viewmodel.Login')" apply="org.zkoss.bind.BindComposer" -->
+
+    
+	<grid style="margin-bottom:10px;">
+		<columns >
+			<column/>
+			<column/>
+		</columns>
+		<rows>
+			<row>
+				<label value="login"/>
+				<textbox value="@bind(vm.newUser.login)" constraint="no empty"/>
+			</row>
+			<row>
+				<label value="Imię"/>
+				<textbox value="@bind(vm.newUser.firstname)" constraint="no empty"/>
+			</row>
+			<row>
+				<label value="Nazwisko"/>
+				<textbox value="@bind(vm.newUser.lastname)" constraint="no empty"/>
+			</row>
+			<row>
+				<label value="Email"/>
+				<textbox value="@bind(vm.newUser.email)" constraint="no empty"/>
+			</row>
+			<row>
+				<label value="Hasło"/>
+				<textbox id="newPassword" type="password" constraint="no empty"/>
+			</row>
+			<row>
+				<label value="Powtórz hasło"/>
+				<textbox id="newPassword2" type="password" constraint="no empty"/>
+			</row>
+		</rows>
+	</grid>
+	<button label="Zarejestruj">
+		<attribute name="onClick"><![CDATA[                          
+			if (newPassword.getValue() == null || !newPassword.getValue().equals(newPassword2.getValue())){
+				 Messagebox.show("Podane hasła są różne", "Error", Messagebox.OK, Messagebox.ERROR);
+				 return;
+			}						
+			vm.registerNewUser(newPassword.getValue());
+		]]></attribute>
+	</button>
+	
+</window>

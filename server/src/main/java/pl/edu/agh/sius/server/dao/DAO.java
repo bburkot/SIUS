@@ -1,14 +1,21 @@
 package pl.edu.agh.sius.server.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.type.BigDecimalType;
+import org.hibernate.type.StringType;
 
 import pl.edu.agh.sius.server.common.HibernateUtil;
+import pl.edu.agh.sius.server.pojo.Billings;
 import pl.edu.agh.sius.server.pojo.Group;
 import pl.edu.agh.sius.server.pojo.GroupDetails;
 import pl.edu.agh.sius.server.pojo.OrderDetails;
+import pl.edu.agh.sius.server.pojo.Payment;
+import pl.edu.agh.sius.server.pojo.Product;
 import pl.edu.agh.sius.server.pojo.User;
 import pl.edu.agh.sius.server.pojo.UserDetails;
 
@@ -30,25 +37,49 @@ public class DAO {
 	}
 	
 	
-	// USER POJO
+	
 	public String saveOrUpdate(Object obj){
 		session.beginTransaction();
-		try {
-			
+		try {			
 			session.saveOrUpdate(obj);
 			session.getTransaction().commit();
 			return null;
-		} catch (ConstraintViolationException ex){
+		} catch (ConstraintViolationException ex){	
+			System.out.println("rollback");
 			session.getTransaction().rollback();
-			ex.printStackTrace();
-			
-			if (ex.getSQLException() != null)
+			session = HibernateUtil.openSession();
+			if (ex.getSQLException() != null){
+				System.err.println(ex.getSQLException().getMessage());
 				return ex.getSQLException().getMessage();
-			else 
+			} else { 
+				System.err.println(ex.getMessage());
 				return ex.getMessage();
+			}
+		} catch (Throwable ex){
+			session.getTransaction().rollback();
+			session = HibernateUtil.openSession(); 
+			ex.printStackTrace();
+			System.out.println("rollback");
+			return ex.getMessage();
 		}		
 	}
 	
+	public String delete(Object obj) {
+		session.beginTransaction();
+		try {
+			session.delete(obj);
+			session.getTransaction().commit();
+			return null;
+		} catch (Throwable ex){
+			session.getTransaction().rollback();
+			session = HibernateUtil.openSession(); 
+			ex.printStackTrace();
+			System.out.println("rollback");
+			return ex.getMessage();
+		}			
+	}
+	
+	// USER POJO
 	public User getUser(String id){
 		if (id == null)
 			return null;
@@ -57,7 +88,7 @@ public class DAO {
 	}	
 	public User getUser(String id, String token){
 		User user = getUser(id);
-		if (user != null && user.getToken().equals(token) )
+		if (user != null && user.getToken() != null && user.getToken().equals(token) )
 			return user;
 		else
 			return null;
@@ -108,6 +139,14 @@ public class DAO {
 		return session.createQuery("from Group where name like :name").setParameter("name", "%" + namePattern + "%").list();	
 	}
 	
+	@SuppressWarnings("unchecked")
+	public Group getGroupByName(String name){
+		List<Group> groups = session.createQuery("from Group where name = :name").setParameter("name", name).list();	
+		if (groups.size() != 1)
+			return null;
+		return groups.get(0);
+	}
+	
 
 	// ORDER POJO
 	public OrderDetails getOrder(String id){
@@ -116,28 +155,81 @@ public class DAO {
 		else
 			return (OrderDetails) session.get(OrderDetails.class, id);
 	}
+
 	
+	@SuppressWarnings("unchecked")
+	public BigDecimal getMaxDept(User other, User logged) {	// logged asking of max debt
+
+		List<BigDecimal> list = 
+				session.createSQLQuery("SELECT [max_debt_to_first_user] FROM billing" +
+				" where user_first_id = :first and user_second_id = :second")
+				.addScalar("[max_debt_to_first_user]", new BigDecimalType())
+				.setString("first", logged.getId())
+				.setString("second", other.getId())				
+				.list();
+		if (list.size() == 1)
+			return list.get(0);
+		
+		list = session.createSQLQuery("SELECT [max_debt_to_second_user] FROM billing" +
+				" where user_first_id = :first and user_second_id = :second")
+				.addScalar("[max_debt_to_second_user]", new BigDecimalType())
+				.setString("first", other.getId())	
+				.setString("second", logged.getId())							
+				.list();
+		
+		if (list.size() == 1)
+			return list.get(0);
+		
+		return null;
+	}
 	
 //	// BILLING POJO
-//	public Billing getBilling(String id){
-//		return (Billing) session.get(Billing.class, id);
-//	}
-//	
-//	public Billing getBilling(User user1, User user2){
-//		@SuppressWarnings("unchecked")
-//		List<Billing> list = session.createQuery("from Billing as b where (b.first = :u1 and b.second = :u2) or (b.first = :u2 and b.second = :u1)")
-//			.setParameter("u1", user1)
-//			.setParameter("u2", user2)
-//			.list();
-//		
-//		if (list.size() != 1)
-//			return null;
-//		return list.get(0);
-//	}
-//	
-//	@SuppressWarnings("unchecked")
-//	public List<Billing> getBillings(User user){
-//		return session.createQuery("from Billing as b where b.first = :u1 or b.second = :u1")
-//				.setParameter("u1", user).list();
-//	}
+	public Billings getBillings(String id){
+		if (id == null)
+			return null;
+		return (Billings) session.get(Billings.class, id);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Billings getBillings(User user1, User user2) {
+		if (user1.getId().equals(user2.getId()))
+			return null;
+		
+		List<Billings> list = session.createQuery("from Billings as b where (b.first = :u1 and b.second = :u2) or (b.first = :u2 and b.second = :u1)")
+			.setParameter("u1", user1)
+			.setParameter("u2", user2)
+			.list();
+		if (list.size() == 1)
+			return list.get(0);
+		return null;
+	}
+	
+	public Billings getOrCreateBillings(User user1, User user2){
+		if (user1.getId().equals(user2.getId()))
+			return null;
+		
+		Billings b = getBillings(user1, user2);
+		if (b == null)
+			return new Billings(user1, user2);
+		return b;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Billings> getUserBillings(User user){
+		return session.createQuery("from Billings as b where b.first = :u1 or b.second = :u1")
+				.setParameter("u1", user).list();
+	}
+
+	public Product getProduct(String id) {
+		if (id == null)
+			return null;
+		return (Product) session.get(Product.class, id);
+	}
+
+	public Payment getPayment(String id) {
+		if (id == null)
+			return null;
+		return (Payment) session.get(Payment.class, id);
+	}
+	
 }

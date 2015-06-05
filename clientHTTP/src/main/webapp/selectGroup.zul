@@ -21,7 +21,7 @@
 				</template>
 			</rows>					
 		</grid>	
-		<button label="Dodaj nową grupe" onClick="@command('addGroup')"/>
-		<button label="Znajdź grupe" onClick="@command('findGroup')"/>
+		<button label="Dodaj nową grupe" onClick="@command('showAddGroup')"/>
+		<button label="Znajdź grupe" onClick="@command('showFindGroup')"/>
 	</div>
 </window>

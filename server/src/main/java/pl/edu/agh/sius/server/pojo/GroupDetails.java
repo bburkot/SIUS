@@ -1,8 +1,9 @@
 package pl.edu.agh.sius.server.pojo;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,7 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -28,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="GroupDetails")
 @XmlAccessorType(XmlAccessType.NONE)
 @Entity
-@Table(name="\"group\"")
+@Table(name="\"group\"", uniqueConstraints = { @UniqueConstraint(columnNames = "name", name="UK_Name" )})
 public class GroupDetails implements Serializable{
 	private static final long serialVersionUID = 1L;
 		
@@ -45,8 +46,8 @@ public class GroupDetails implements Serializable{
 	
 	@XmlElement
 	@XmlElementWrapper
-	@OneToMany(mappedBy="groupDetails" ,fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	private List<OrderDetails> orders;
+	@OneToMany(mappedBy="groupDetails" ,fetch=FetchType.EAGER, cascade=CascadeType.DETACH)
+	private Set<OrderDetails> orders;
 	
 	@XmlElement
 	@XmlElementWrapper
@@ -54,7 +55,7 @@ public class GroupDetails implements Serializable{
 	@JoinTable (name = "member_group",
 		joinColumns = { @JoinColumn(name="group_id") },
 		inverseJoinColumns = { @JoinColumn(name="user_id") })
-	private List<User> memberUsers;
+	private Set<User> memberUsers;
 	
 	@XmlElement
 	@XmlElementWrapper
@@ -62,15 +63,15 @@ public class GroupDetails implements Serializable{
 	@JoinTable (name = "applicant_group",
 		joinColumns = { @JoinColumn(name="group_id") },
 		inverseJoinColumns = { @JoinColumn(name="user_id") })
-	private List<User> applicantUsers;
+	private Set<User> applicantUsers;
 
 	
 	// constructors
 	public GroupDetails(){}
 	public GroupDetails(Group newGroup, User user) {
-		this.name = newGroup.getName();
-		this.memberUsers = new ArrayList<User>();
-		this.memberUsers.add(user);
+		name = newGroup.getName();
+		memberUsers = new HashSet<User>();
+		memberUsers.add(user);
 	}
 
 	
@@ -91,30 +92,36 @@ public class GroupDetails implements Serializable{
 		this.name = name;
 	}
 
-	public List<OrderDetails> getOrders() {
+	public Set<OrderDetails> getOrders() {
 		if (orders == null)
-			return new ArrayList<OrderDetails>();
+			return new HashSet<OrderDetails>();
 		return orders;
 	}
 
-	public List<User> getMemberUsers() {
+	public Set<User> getMemberUsers() {
 		if (memberUsers == null)
-			return new ArrayList<User>();
+			return new HashSet<User>();
 		return memberUsers;
 	}
 
-	public List<User> getApplicantUsers() {
+	public Set<User> getApplicantUsers() {
 		if (applicantUsers == null)
-			return new ArrayList<User>();
+			return new HashSet<User>();
 		return applicantUsers;
 	}
-	public void setOrders(List<OrderDetails> orders) {
+	public void setOrders(Set<OrderDetails> orders) {
 		this.orders = orders;
 	}
-	public void setMemberUsers(List<User> memberUsers) {
+	public void setMemberUsers(Set<User> memberUsers) {
 		this.memberUsers = memberUsers;
 	}
-	public void setApplicantUsers(List<User> applicantUsers) {
+	public void setApplicantUsers(Set<User> applicantUsers) {
 		this.applicantUsers = applicantUsers;
+	}
+	@Override
+	public String toString() {
+		return "GroupDetails [id=" + id + ", name=" + name + ", orders="
+				+ orders + ", memberUsers=" + memberUsers + ", applicantUsers="
+				+ applicantUsers + "]";
 	}
 }

@@ -1,5 +1,5 @@
 
-package pl.edu.agh.sius.server;
+package pl.edu.agh.sius;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;

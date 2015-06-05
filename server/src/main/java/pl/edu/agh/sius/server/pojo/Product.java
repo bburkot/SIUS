@@ -2,9 +2,10 @@ package pl.edu.agh.sius.server.pojo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -48,17 +49,17 @@ public class Product implements Serializable {
 		
 	@XmlElement
 	@XmlElementWrapper
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.DETACH)
 	@JoinTable (name = "user_product",
 		joinColumns = { @JoinColumn(name="product_id") },
 		inverseJoinColumns = { @JoinColumn(name="user_id") }	)
-	private List<User> users;
+	private Set<User> users;
 	
 	@XmlElement
 	@Column(name="max_user_per_product", columnDefinition="smallint")
 	private int maxUserPerProduct;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="order_id", nullable=false)
 	private OrderDetails order;
 
@@ -88,13 +89,13 @@ public class Product implements Serializable {
 		this.cost = cost;
 	}
 
-	public List<User> getUsers() {
+	public Set<User> getUsers() {
 		if (users == null)
-			return new ArrayList<User>();
+			return new HashSet<User>();
 		return users;
 	}
 
-	public void setUsers(List<User> users) {
+	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 

@@ -1,13 +1,15 @@
 
-package pl.edu.agh.sius.server;
+package pl.edu.agh.sius;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -65,6 +67,28 @@ public class Product {
     protected Product.Users users;
     protected int maxUserPerProduct;
 
+    
+    public int numberOfUsers(){
+    	if (users == null)
+    		return 0;
+    	else
+    		return users.getUsers().size();
+    }    
+    public boolean canJoin(){
+    	return numberOfUsers() < maxUserPerProduct;
+    }   
+    public String printNumber(){
+    	return numberOfUsers() + "/" + maxUserPerProduct;
+    }
+    public List<User> getUsersList(){
+    	if (users == null)
+    		return new ArrayList<User>();
+    	else
+    		return users.getUsers();
+    }
+    
+    
+    
     /**
      * Gets the value of the id property.
      * 

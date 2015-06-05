@@ -1,6 +1,6 @@
 <window title="Dodaj grupe" border="normal" closable="true" action="show: slideDown;hide: slideUp">
 	
 	<label value="Nazwa grupy"/>
-	<textbox maxlength="200"/>
-	<button label="dodaj"/>
+	<textbox maxlength="200" value="@bind(vm.newGroup.name)" constraint="no empty"/>
+	<button label="dodaj" onClick="@command('addGroup')"/>
 </window>

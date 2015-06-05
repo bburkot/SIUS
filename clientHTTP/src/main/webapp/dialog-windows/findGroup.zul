@@ -1,4 +1,30 @@
-<window title="Znajdź grupe" border="normal" closable="true" action="show: slideDown;hide: slideUp">
+<window title="Znajdź grupe" border="normal" closable="true" 
+	action="show: slideDown;hide: slideUp"
+	viewModel="@id('vm') @init('pl.edu.agh.sius.client.http.viewmodel.SelectGroup')" 
+	apply="org.zkoss.bind.BindComposer" width="600px">
  
- 	Znajdz grupe
+ 	<vlayout>
+ 		<hlayout>
+ 			
+ 			<textbox value="@bind(vm.findGroupPattern)"/>	
+ 			<button  label="Szukaj grupy" onClick="@command('findGroup')"/>	
+ 		</hlayout>
+ 		
+ 		<grid model="@load(vm.findGroups)" emptyMessage="brak wpisów">
+ 			<columns>
+ 				<column label="nazwa" />
+ 				<column />
+ 			</columns>
+ 			<rows>
+ 				<template name="model">
+ 					<row>
+ 						<label value="@load(each.name)"/>
+ 						<button label="aplikuj" onClick="@command('applicateToGroup', groupId=each.id)"/>
+ 					</row>
+ 				</template>
+ 			</rows>
+ 		
+ 		</grid>
+ 	
+ 	</vlayout>
 </window>

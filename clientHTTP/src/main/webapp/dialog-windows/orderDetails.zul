@@ -1,27 +1,42 @@
-<window title="Szczegły zamówienia" border="normal" closable="true" action="show: slideDown;hide: slideUp" width="600px">
+<window title="Szczegły zamówienia" border="normal" closable="true" 
+	action="show: slideDown;hide: slideUp" width="800px"
+>
 
-	<grid>
+	<grid model="@load(vm.products)">
 		<columns visible="true">
-			<column align="center" label="Nazwa produktu"/>
+			<column align="center" label="Nazwa produktu" width="250px"/>
 			<column align="center" label="Osoba(y) które zamówiły dany produkt"/>
-			<column align="center" label="Cena" width="100px"/>
+			<column align="center" label="Cena" width="80px"/>
 		</columns>
 		<rows>
-			<row>
-				<label value="Pizza"/>
-				<cell><label value="Jan Nowak j.n@m.c"/></cell>
-				<label value="21.03zł"/>
-			</row>
-			<row>
-				<label value="Pizza"/>
-				<cell>
-					<vlayout>
-						<label value="Jan Nowak j.n@m.c"/>
-						<label value="Michał Nowak m.n@m.c"/>
-					</vlayout>					
-				</cell> 
-				<label value="21.03zł"/>
-			</row>
+			<template name="model">
+				<row>
+					<label value="@load(each.name)"/>
+					<cell>
+						<grid model="@load(each.usersList)">
+							<columns>
+								<column align="center"/>
+								<column align="center" width="80px"/>
+							</columns>
+							<rows>
+								<template name="model" var="user">
+									<row>
+										<label value="${user.firstname} ${user.lastname} ${user.email}"/>
+										<cell>
+											<button label="anuluj" 	onClick="@command('cancelProduct',val=each, user=user)"
+													visible="@load(vm.canCancel(each, user))"/>										
+										</cell>
+									</row>
+								
+								</template>													
+							</rows>					
+						</grid>				
+					</cell>
+					<label value="@load(each.cost)"/>
+				</row>
+			
+			
+			</template>
 		</rows>
 	</grid>
 </window>

@@ -1,15 +1,12 @@
-<div width="100%" align="right" style="margin-bottom:15px;">
-	<menubar style="margin-bottom:5px;" width="100px" >
-		<menu label="Jan Nowak">
+<div width="100%" align="right" style="margin-bottom:15px;"
+	viewModel="@id('vm') @init('pl.edu.agh.sius.client.http.viewmodel.Header')" apply="org.zkoss.bind.BindComposer">
+	
+	<menubar style="margin-bottom:5px;" width="150px" >
+		<menu label="${vm.loggedUser.firstname} ${vm.loggedUser.lastname}">
 			<menupopup>
 				<menuitem label="historia" onClick='Executions.sendRedirect("/history.zul")'/>
 				<menuitem label="edytuj" onClick='Executions.sendRedirect("/edit.zul")'/>
-				<menuitem label="wyloguj">
-					<attribute name="onClick">
-						System.out.print("wyloguj TODO");
-						Executions.sendRedirect("/");
-					</attribute>
-				</menuitem>
+				<menuitem label="wyloguj" onClick="@command('logout')"/>
 			</menupopup>
 		</menu>
 	</menubar>

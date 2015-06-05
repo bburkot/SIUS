@@ -1,7 +1,6 @@
 package pl.edu.agh.sius.server.pojo.responses;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -10,13 +9,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import pl.edu.agh.sius.server.pojo.OperationStatus;
-import pl.edu.agh.sius.server.pojo.Payment;
 
 
-@XmlRootElement(name="ResponsePayments")
+@XmlRootElement(name="ResponseBalances")
 @XmlAccessorType(XmlAccessType.NONE)
-public class ResponsePayments implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class ResponseBalances implements Serializable{
+private static final long serialVersionUID = 1L;
 	
 	
 	@XmlElement
@@ -26,10 +24,11 @@ public class ResponsePayments implements Serializable {
 	private String msg;
 	
 	@XmlElement
-	private List<Payment> payments;	
-	
-	public ResponsePayments(){
-		operationStatus = OperationStatus.ERROR;
+	private List<Balance> balances;
+
+	// constructors
+	public ResponseBalances(){
+		this.operationStatus = OperationStatus.ERROR;
 	}
 	
 	public void succeed() {
@@ -39,7 +38,6 @@ public class ResponsePayments implements Serializable {
 		operationStatus = OperationStatus.ERROR;
 	}
 
-	// setters and getters
 	public OperationStatus getOperationStatus() {
 		return operationStatus;
 	}
@@ -56,13 +54,11 @@ public class ResponsePayments implements Serializable {
 		this.msg = msg;
 	}
 
-	public List<Payment> getPayments() {
-		if (payments == null)
-			return new ArrayList<Payment>();
-		return payments;
+	public List<Balance> getBalances() {
+		return balances;
 	}
 
-	public void setPayments(List<Payment> payments) {
-		this.payments = payments;
+	public void setBalances(List<Balance> balances) {
+		this.balances = balances;
 	}
 }

@@ -7,7 +7,9 @@
 		<div width="600px" align="right">
 			<include src="header.zul"></include>
 		</div>
-		<grid width="600px" style="margin-bottom:5px;" emptyMessage="brak" mold="paging" pageSize="10">
+		<label value="@load(vm.groupDetails.name)"/>
+		<grid width="600px" model="@load(vm.openOrders)" style="margin-bottom:5px;" 
+				emptyMessage="brak wpisów" mold="paging" pageSize="10">
 			<auxhead>
 				<auxheader label="Otwarte zamówienia" colspan="4" align="center"/>
 			</auxhead>	
@@ -18,17 +20,20 @@
 				<column align="center" width="120px"/>
 			</columns>
 			<rows>
-				<row>
-					<label value="Pizza Hut" />
-					<label value="2005-01-01" />
-					<label value="Jan Nowak" />
-					<button label="Przejdź" onClick='Executions.sendRedirect("/order.zul?1234")'/>
-				</row>						
+				<template name="model">
+					<row>
+						<label value="@load(each.title)" />
+						<label value="@load(each.date) @converter('formatedDate',format='yyyy-MM-dd')" />
+						<label value="${each.realizedBy.firstname} ${each.realizedBy.lastname} " />
+						<button label="Przejdź" onClick="@command('showOrder', order=each)"/>
+					</row>
+				</template>					
 			</rows>					
 		</grid>	
-		<button label="Nowe zamówienie" style="margin-bottom:20px;" onClick="@command('newOrder')"/>
+		<button label="Nowe zamówienie" style="margin-bottom:20px;" onClick="@command('showNewOrder')"/>
 
-		<grid width="600px" style="margin-bottom:20px;" emptyMessage="brak" mold="paging" pageSize="10">
+		<grid width="600px" model="@load(vm.closedOrders)" style="margin-bottom:20px;" 
+				emptyMessage="brak wpisów" mold="paging" pageSize="5">
 			<auxhead>
 				<auxheader label="Zamkniete zamówienia" colspan="4" align="center"/>
 			</auxhead>	
@@ -39,16 +44,19 @@
 				<column align="center" width="120px"/>
 			</columns>
 			<rows>
-				<row>
-					<label value="Pizza Hut" />
-					<label value="2005-01-01" />
-					<label value="Jan Nowak" />
-					<button label="Przejdź" onClick='Executions.sendRedirect("/order.zul?1234")'/>
-				</row>						
+				<template name="model">
+					<row>
+						<label value="@load(each.title)" />
+						<label value="@load(each.date) @converter('formatedDate',format='yyyy-MM-dd')" />
+						<label value="${each.realizedBy.firstname} ${each.realizedBy.lastname} " />
+						<button label="Przejdź" onClick="@command('showOrder', order=each)"/>
+					</row>
+				</template>							
 			</rows>					
 		</grid>	
 
-		<grid width="600px" emptyMessage="brak grup" mold="paging" pageSize="10">
+		<grid width="600px" model="@load(vm.members)" emptyMessage="brak wpisów" 
+			mold="paging" pageSize="5" style="margin-bottom:20px;">
 			<auxhead>
 				<auxheader label="Członkowie grupy" colspan="5" align="center"/>
 			</auxhead>	
@@ -60,20 +68,40 @@
 				<column align="center"/>
 			</columns>
 			<rows>
-				<row>
-					<label value="Jan" />
-					<label value="Nowak" />
-					<label value="jan.nowak@mail.com" />
-					<button label="brak" tooltiptext="Zmień" onClick="@command('changeDebtLimit')"/>
-					<button label="Usuń"/>
-				</row>
-				<row>
-					<label value="Jan" />
-					<label value="Nowak" />
-					<label value="jan.nowak2@mail.com" />
-					<button label="50zł" tooltiptext="Zmień" onClick="@command('changeDebtLimit', val=null)"/>
-					<button label="Przyjmij"/>
-				</row>						
+				<template name="model">
+					<row>
+						<label value="@load(each.firstname)" />
+						<label value="@load(each.lastname)" />
+						<label value="@load(each.email)" />
+						<button label="${each.maxDept eq null ? 'brak' : each.maxDept}" 
+							tooltiptext="Zmień" onClick="@command('showChangeDebtLimit', val=each)"/>
+						<button label="Usuń" onClick="@command('removeUser', user=each)"/>
+					</row>
+				</template>									
+			</rows>					
+		</grid>	
+		<grid width="600px" model="@load(vm.applicants)" emptyMessage="brak wpisów"  
+			mold="paging" pageSize="10">
+			<auxhead>
+				<auxheader label="Aplikują do grupy" colspan="5" align="center"/>
+			</auxhead>	
+			<columns visible="true">
+				<column align="center" label="Imię" width="100px"/>
+				<column align="center" label="Nazwisko" width="100px"/>
+				<column align="center" label="Mail" width="200px"/>
+				<column align="center" width="100px"/>
+				<column align="center"/>
+			</columns>
+			<rows>
+				<template name="model">
+					<row>
+						<label value="@load(each.firstname)" />
+						<label value="@load(each.lastname)" />
+						<label value="@load(each.email)" />
+						<button label="Przyjmij" onClick="@command('acceptApplication', user=each)"/>
+						<button label="Usuń" onClick="@command('removeUser', user=each)"/>
+					</row>
+				</template>									
 			</rows>					
 		</grid>	
 	</div>	

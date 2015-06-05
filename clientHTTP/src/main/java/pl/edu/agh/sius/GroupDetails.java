@@ -1,5 +1,5 @@
 
-package pl.edu.agh.sius.server;
+package pl.edu.agh.sius;
 
 import java.util.ArrayList;
 import java.util.List;

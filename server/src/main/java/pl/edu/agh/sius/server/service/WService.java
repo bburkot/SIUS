@@ -1,7 +1,6 @@
 package pl.edu.agh.sius.server.service;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -16,10 +15,12 @@ import pl.edu.agh.sius.server.pojo.Group;
 import pl.edu.agh.sius.server.pojo.OrderDetails;
 import pl.edu.agh.sius.server.pojo.Product;
 import pl.edu.agh.sius.server.pojo.User;
+import pl.edu.agh.sius.server.pojo.responses.ResponseBalances;
 import pl.edu.agh.sius.server.pojo.responses.ResponseGroupDetails;
 import pl.edu.agh.sius.server.pojo.responses.ResponseGroups;
 import pl.edu.agh.sius.server.pojo.responses.ResponseOrderDetails;
 import pl.edu.agh.sius.server.pojo.responses.ResponsePayments;
+import pl.edu.agh.sius.server.pojo.responses.ResponseProduct;
 import pl.edu.agh.sius.server.pojo.responses.ResponseProducts;
 import pl.edu.agh.sius.server.pojo.responses.ResponseSimple;
 import pl.edu.agh.sius.server.pojo.responses.ResponseUser;
@@ -29,11 +30,11 @@ import pl.edu.agh.sius.server.pojo.responses.ResponseUserDetails;
 @SOAPBinding(parameterStyle = ParameterStyle.BARE, use=Use.LITERAL, style=Style.DOCUMENT)
 public interface WService {
 	
-// USER OPERATION	
+// TODO USER OPERATION	
 	
 	@WebMethod(action="registerUser", operationName="registerUser")
-	@WebResult(name = "ResponseUser")
-	public ResponseUser registerUser (
+	@WebResult(name = "ResponseSimple")
+	public ResponseSimple registerUser (
 			@WebParam(name = "UserRegister",   partName = "User") 	User user,
 			@WebParam(name = "String", partName = "UserPassword") 	String password
 	);
@@ -66,22 +67,31 @@ public interface WService {
 			@WebParam(name = "String", partName = "UserPassword")	String userPassword
 	);
 
-	@WebMethod(action="joinUserToGroup", operationName="joinUserToGroup")
+	@WebMethod(action="applicateToGroup", operationName="applicateToGroup")
 	@WebResult(name="ResponseSimple")
-	public ResponseSimple joinUserToGroup(
+	public ResponseSimple applicateToGroup(
 			@WebParam(name = "String", partName = "GroupID") 	String groupID,
 			@WebParam(name = "User",   partName = "User") 		User user
+	);
+	
+	@WebMethod(action="acceptApplication", operationName="acceptApplication")
+	@WebResult(name="ResponseSimple")
+	public ResponseSimple acceptApplication(
+			@WebParam(name = "String", partName = "acceptUserId") 	String acceptUserId,
+			@WebParam(name = "String", partName = "GroupID") 		String groupID,
+			@WebParam(name = "User",   partName = "User") 			User user
 	);
 	
 	@WebMethod(action="removeUserFromGroup", operationName="removeUserFromGroup")
 	@WebResult(name="ResponseSimple")
 	public ResponseSimple removeUserFromGroup(
-			@WebParam(name = "String", partName = "GroupID") 	String groupID,
-			@WebParam(name = "User",   partName = "User") 		User user 
+			@WebParam(name = "String", partName = "removeUserId") 	String removeUserId,
+			@WebParam(name = "String", partName = "GroupID") 		String groupID,
+			@WebParam(name = "User",   partName = "User") 			User user 
 	);
 	
 	
-// GROUP OPERATIONS	
+// TODO GROUP OPERATIONS	
 	
 	@WebMethod(action="getGroupDetails", operationName="getGroupDetails")
 	@WebResult(name="ResponseGroupDetails")
@@ -104,7 +114,7 @@ public interface WService {
 			@WebParam(name = "User",   partName = "User") 				User user
 	);
 	
-// ORDER OPERATIONS
+// TODO ORDER OPERATIONS
 	@WebMethod(action="getOrderDetails", operationName="getOrderDetails")
 	@WebResult(name="ResponseOrderDetails", targetNamespace="http://www.agh.edu.pl/sius")
 	public ResponseOrderDetails getOrderDetails(
@@ -115,6 +125,7 @@ public interface WService {
 	@WebMethod(action="addOrder", operationName="addOrder")
 	@WebResult(name="ResponseOrderDetails")
 	public ResponseOrderDetails addOrder(
+			@WebParam(name = "String", 			partName = "GroupID")  			String groupId,
 			@WebParam(name = "OrderDetails", 	partName = "OrderDetails") 		OrderDetails newOrder,
 			@WebParam(name = "User",   			partName = "User") 				User user
 	);
@@ -126,7 +137,7 @@ public interface WService {
 			@WebParam(name = "User",   partName = "User") 		User user
 	);
 	
-// BILING OPERATIONS
+// TODO BILING OPERATIONS
 	@WebMethod(action="changeDept", operationName="changeDept")
 	@WebResult(name="ResponseSimple")
 	public ResponseSimple changeDept(
@@ -149,23 +160,32 @@ public interface WService {
 			@WebParam(name = "String", partName = "StringID")	String paymentID,
 			@WebParam(name = "User",   partName = "User") 		User user
 	);
+	
+	@WebMethod(action="cancelPayment", operationName="cancelPayment")
+	@WebResult(name="ResponseSimple")
+	public ResponseSimple cancelPayment (
+			@WebParam(name = "String", partName = "StringID")	String paymentID,
+			@WebParam(name = "User",   partName = "User") 		User user
+	);
+	
+	
 	@WebMethod(action="getUserPayments", operationName="getUserPayments")
 	@WebResult(name="ResponsePayments")
 	public ResponsePayments getUserPayments(
-			@WebParam(name = "UserLogged",   partName = "User") 		User user
+			@WebParam(name = "UserPayments",   partName = "User") 	User user
 	);
 	
-	@WebMethod(action="getUsersPayments", operationName="getUsersPayments")
-	@WebResult(name="ResponsePayments")
-	public ResponsePayments getUsersPayments(
-			@WebParam(name = "UserOther",    partName = "User") 	User userOther,
-			@WebParam(name = "LoggedUser",   partName = "User") 	User userLogged
+	@WebMethod(action="getUsersBalances", operationName="getUsersBalances")
+	@WebResult(name="ResponseBalances")
+	public ResponseBalances getUsersBalances (
+			@WebParam(name = "UserBalances",   partName = "User") 	User user
 	);
 	
-// PRODUCT OPERATIONS
+// TODO PRODUCT OPERATIONS
 	@WebMethod(action="newProductInOrder", operationName="newProductInOrder")
-	@WebResult(name="ResponseSimple")
-	public ResponseSimple newProductInOrder(
+	@WebResult(name="ResponseProduct")
+	public ResponseProduct newProductInOrder(
+			@WebParam(name = "String", 		partName = "OrderID") 	String orderId,
 			@WebParam(name = "Product", 	partName = "Product")	Product newProduct,
 			@WebParam(name = "User",   		partName = "User") 		User user
 	);
@@ -173,7 +193,7 @@ public interface WService {
 	@WebMethod(action="joinToProduct", operationName="joinToProduct")
 	@WebResult(name="ResponseSimple")
 	public ResponseSimple joinToProduct(
-			@WebParam(name = "String", partName = "StringID")	String productID,
+			@WebParam(name = "String", partName = "ProductID")	String productID,
 			@WebParam(name = "User",   partName = "User") 		User user
 	);
 	
@@ -181,5 +201,13 @@ public interface WService {
 	@WebResult(name="ResponseProducts")
 	public ResponseProducts getProductsOrderedByUser(
 			@WebParam(name = "UserProducts",   partName = "User") 		User user
+	);
+	
+	@WebMethod(action="cancelUserFromProduct", operationName="cancelUserFromProduct")
+	@WebResult(name="ResponseSimple")
+	public ResponseSimple cancelUserFromProduct(
+			@WebParam(name = "String", partName = "UserID")		String userID,
+			@WebParam(name = "String", partName = "ProductID")	String productID,
+			@WebParam(name = "User",   partName = "User") 		User user
 	);
 }

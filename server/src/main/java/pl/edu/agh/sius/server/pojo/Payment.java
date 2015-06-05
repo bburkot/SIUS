@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,8 +43,8 @@ public class Payment implements Serializable{
 	@Transient
 	private User to;
 	
-	@XmlElement
-	@Column(columnDefinition="smalldatetime", nullable=false)
+	@XmlElement					// set date when second user confirm it
+	@Column(columnDefinition="smalldatetime")
 	private Date date;
 	
 	@XmlElement
@@ -51,11 +52,20 @@ public class Payment implements Serializable{
 	private BigDecimal amount;									// amount > 0 => first user have paid to second user
 
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="billing_id", nullable=false)
 	private Billings billing;
 
+	public Payment(){}
 	
+	public Payment(User first, User second, BigDecimal amount, Payment p) {
+		this.from = first;
+		this.to = second;
+		this.amount = amount;
+		this.date = p.date;
+		this.id = p.id;
+	}
+
 	// getters and setters
 	public String getId() {
 		return id;
@@ -99,5 +109,13 @@ public class Payment implements Serializable{
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 }

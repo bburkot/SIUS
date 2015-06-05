@@ -1,14 +1,17 @@
-<window title="Zapłać" border="normal" closable="true" action="show: slideDown;hide: slideUp" width="400px">
+<window title="Zapłać" border="normal" closable="true" 
+	action="show: slideDown;hide: slideUp" width="400px"
+	>
+	
 	<vlayout>
 		<hlayout>
-			<label value="Jan Nowak"/>
-			<label value="jan.nowak@mail.com"/>
+			<label value="${vm.payToBalance.user.firstname} ${vm.payToBalance.user.lastname}"/>
+			<label value="@load(vm.payToBalance.user.email)"/>
 		</hlayout>	
-		<label value="Obecny dług = 50zł"/>
+		<label value="Obecny dług = ${vm.payToBalance.balance} zł"/>
 		<hlayout>
 			<label value="Zapłać"/>
-			<textbox/>
+			<doublebox value="@bind(vm.payToUserAmount)" constraint="no empty, no negative"/>
 		</hlayout>
-		<button label="Wykonaj"/>
+		<button label="Wykonaj" onClick="@command('pay')"/>
 	</vlayout>
 </window>

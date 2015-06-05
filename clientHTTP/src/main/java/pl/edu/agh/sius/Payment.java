@@ -1,7 +1,9 @@
 
-package pl.edu.agh.sius.server;
+package pl.edu.agh.sius;
 
 import java.math.BigDecimal;
+import java.util.Date;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlID;
@@ -9,7 +11,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import javax.xml.datatype.XMLGregorianCalendar;
+
 
 
 /**
@@ -52,7 +54,7 @@ public class Payment {
     protected User from;
     protected User to;
     @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar date;
+    protected Date date;
     protected BigDecimal amount;
 
     /**
@@ -135,7 +137,7 @@ public class Payment {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getDate() {
+    public Date getDate() {
         return date;
     }
 
@@ -147,7 +149,7 @@ public class Payment {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setDate(XMLGregorianCalendar value) {
+    public void setDate(Date value) {
         this.date = value;
     }
 

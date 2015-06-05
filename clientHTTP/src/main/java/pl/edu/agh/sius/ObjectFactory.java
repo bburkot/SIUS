@@ -1,11 +1,21 @@
 
-package pl.edu.agh.sius.server;
+package pl.edu.agh.sius;
 
 import java.math.BigDecimal;
+
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
+
+import pl.edu.agh.sius.server.responses.ResponseGroupDetails;
+import pl.edu.agh.sius.server.responses.ResponseGroups;
+import pl.edu.agh.sius.server.responses.ResponseOrderDetails;
+import pl.edu.agh.sius.server.responses.ResponsePayments;
+import pl.edu.agh.sius.server.responses.ResponseProducts;
+import pl.edu.agh.sius.server.responses.ResponseSimple;
+import pl.edu.agh.sius.server.responses.ResponseUser;
+import pl.edu.agh.sius.server.responses.ResponseUserDetails;
 
 
 /**

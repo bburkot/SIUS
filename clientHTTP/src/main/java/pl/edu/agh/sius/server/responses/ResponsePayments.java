@@ -1,27 +1,31 @@
 
-package pl.edu.agh.sius.server;
+package pl.edu.agh.sius.server.responses;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
+import pl.edu.agh.sius.OperationStatus;
+import pl.edu.agh.sius.Payment;
+
 
 /**
- * <p>Java class for responseProducts complex type.
+ * <p>Java class for responsePayments complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="responseProducts"&gt;
+ * &lt;complexType name="responsePayments"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element name="operationStatus" type="{http://www.agh.edu.pl/sius}operationStatus" minOccurs="0"/&gt;
  *         &lt;element name="msg" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="products" type="{http://www.agh.edu.pl/sius}product" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;element name="payments" type="{http://www.agh.edu.pl/sius}payment" maxOccurs="unbounded" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -31,17 +35,17 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "responseProducts", propOrder = {
+@XmlType(name = "responsePayments", propOrder = {
     "operationStatus",
     "msg",
-    "products"
+    "payments"
 })
-public class ResponseProducts {
+public class ResponsePayments {
 
     @XmlSchemaType(name = "string")
     protected OperationStatus operationStatus;
     protected String msg;
-    protected List<Product> products;
+    protected List<Payment> payments;
 
     /**
      * Gets the value of the operationStatus property.
@@ -92,32 +96,32 @@ public class ResponseProducts {
     }
 
     /**
-     * Gets the value of the products property.
+     * Gets the value of the payments property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the products property.
+     * This is why there is not a <CODE>set</CODE> method for the payments property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getProducts().add(newItem);
+     *    getPayments().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Product }
+     * {@link Payment }
      * 
      * 
      */
-    public List<Product> getProducts() {
-        if (products == null) {
-            products = new ArrayList<Product>();
+    public List<Payment> getPayments() {
+        if (payments == null) {
+            payments = new ArrayList<Payment>();
         }
-        return this.products;
+        return this.payments;
     }
 
 }

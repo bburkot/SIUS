@@ -1,9 +1,9 @@
 package pl.edu.agh.sius.server.pojo;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -58,17 +58,17 @@ public class OrderDetails implements Serializable {
 	private Date date;
 	
 	@XmlElement
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="realized_by_user_id", nullable=false)
 	private User realizedBy;
 	
 	@XmlElement
 	@XmlElementWrapper
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="order", cascade=CascadeType.ALL)
-	private List<Product> products;
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="order", cascade=CascadeType.ALL)
+	private Set<Product> products;
 
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="group_id", nullable=false)
 	private GroupDetails groupDetails;
 	
@@ -121,13 +121,13 @@ public class OrderDetails implements Serializable {
 		this.realizedBy = realizedBy;
 	}
 
-	public List<Product> getProducts() {
+	public Set<Product> getProducts() {
 		if (products == null)
-			return new ArrayList<Product>();
+			return new HashSet<Product>();
 		return products;
 	}
 
-	public void setProducts(List<Product> products) {
+	public void setProducts(Set<Product> products) {
 		this.products = products;
 	}
 

@@ -2,7 +2,7 @@ package pl.edu.agh.sius.server.pojo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -65,8 +65,11 @@ public class UserDetails implements Serializable {
 	@XmlElement
 	@XmlElementWrapper
 	@ManyToMany(fetch=FetchType.LAZY, mappedBy="memberUsers")
-	private List<Group> groups;
+	private Set<Group> groups;
 	
+	
+	@ManyToMany(fetch=FetchType.LAZY, mappedBy="users")
+	private Set<Product> products;
 	
 	// getters and setters
 	public String getId() {
@@ -125,11 +128,11 @@ public class UserDetails implements Serializable {
 		this.maxDept = maxDept;
 	}
 
-	public List<Group> getGroups() {
+	public Set<Group> getGroups() {
 		return groups;
 	}
 
-	public void setGroups(List<Group> groups) {
+	public void setGroups(Set<Group> groups) {
 		this.groups = groups;
 	}
 
@@ -143,5 +146,13 @@ public class UserDetails implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Set<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Set<Product> products) {
+		this.products = products;
 	}
 }

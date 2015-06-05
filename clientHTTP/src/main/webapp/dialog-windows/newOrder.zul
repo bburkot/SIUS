@@ -8,14 +8,14 @@
 		<rows>
 			<row>
 				<label value="Tytuł"/>
-				<textbox/>
+				<textbox value="@bind(vm.newOrder.title)" constraint="no empty"/>
 			</row>
 			<row>
 				<label value="Wiadomośc grupowa"/>
-				<textbox/>
+				<textbox value="@bind(vm.newOrder.msg)" constraint="no empty"/>
 			</row>
 		</rows>
 	</grid>
-	<button label="Dodaj"/>
+	<button label="Dodaj" onClick="@command('newOrder')"/>
 	
 </window>

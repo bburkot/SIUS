@@ -30,6 +30,9 @@
 						<row spans="2">
 							<button label="Zaloguj się" width="100%" onClick="@command('signin')"/>
 						</row>
+						<row spans="2">
+							<button label="Zarejestruj się" width="100%" onClick="@command('register')"/>
+						</row>
 					</rows>					
 				</grid>	
 			</vlayout>	

@@ -12,44 +12,32 @@
 			<label value="Można zamawiać do 16:00" />
 		</vlayout>
 		
-		<grid width="600px" style="margin-bottom:20px;">
+		<grid width="600px" model="@load(vm.products)" style="margin-bottom:20px;" 
+				emptyMessage="brak wpisów">
 			<auxhead>
-				<auxheader label="Zamówienie" colspan="5" align="center"/>
+				<auxheader label="Zamówienie" colspan="4" align="center"/>
 			</auxhead>	
 			<columns visible="true">
 				<column label="Nazwa produktu"/>
-				<column align="center" label="szt."/>
-				<column align="center" label="cena / szt."/>
-				<column align="center" label="?"/>
-				<column align="center"/>
+				<column align="center" label="cena" width="80px"/>
+				<column align="center" label="zapisanych / max liczba" width="150px"/>
+				<column align="center" width="90px"/>
 			</columns>
 			<rows>
-				<row>
-					<label value="Danie dnia"/>
-					<label value="2"/>
-					<label value="25.03zł"/>
-					<label value=""/>
-					<cell><button label="dołącz" visible="false"/></cell>
-					
-				</row>
-				<row>
-					<label value="Pizza"/>
-					<label value="1"/>
-					<label value="45.03zł"/>
-					<label value="3/5"/>
-					<button label="dołącz"/>
-				</row>
-				<row>
-					<label value="Pizza"/>
-					<label value="2"/>
-					<label value="21.03zł"/>
-					<label value=""/>
-					<cell><button label="dołącz" visible="false"/></cell>
-				</row>
+				<template name="model">
+					<row>
+						<label value="@load(each.name)"/>
+						<label value="${each.cost} zł"/>
+						<label value="${each.printNumber()}"/>
+						<cell><button label="dołącz" onClick="@command('joinToProduct', val=each)" 
+								visible="${each.canJoin()}"/></cell>					
+					</row>				
+				</template>
 			</rows>
 		</grid>
-		<button label="Nowa pozycja" onClick="@command('newProduct')"/>
-		<button label="Widok szczegółowy zamówień" onClick="@command('orderDetails')"/>
-		<button label="Zamknij zamówienie" />
+		
+		<button id="addNewProductButton" label="Nowa pozycja" onClick="@command('showNewProduct')" visible="@load(vm.getCanAddProduct())"/>
+		<button label="Widok szczegółowy zamówień" onClick="@command('showOrderDetails')"/>
+		<button id="closeOrderButton" label="Zamknij zamówienie" visible="@load(vm.canCloseOrder)" onClick="@command('closeOrder')"/>
 	</div>
 </window>

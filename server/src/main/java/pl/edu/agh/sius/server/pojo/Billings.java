@@ -3,7 +3,9 @@ package pl.edu.agh.sius.server.pojo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -46,17 +48,25 @@ public class Billings implements Serializable {
 	@Column(name="max_debt_to_second_user", columnDefinition="smallmoney")
 	private BigDecimal maxFirstUserDebtToSecondUser;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.DETACH)
 	@JoinColumn(name="user_first_id", nullable=false)
 	private User first;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.DETACH)
 	@JoinColumn(name="user_second_id", nullable=false)
 	private User second;
 	
-	@OneToMany(mappedBy="billing", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private List<Payment> payments;
+	@OneToMany(mappedBy="billing", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private Set<Payment> payments;
 
+	public Billings(){}
+	public Billings(User user1, User user2) {
+		balance = BigDecimal.ZERO;
+		first = user1;
+		second = user2;
+		payments = new HashSet<Payment>();
+	}
+	
 
 	// getters and setters
 	public String getId() {
@@ -109,16 +119,26 @@ public class Billings implements Serializable {
 		this.second = second;
 	}
 
-	public List<Payment> getPayments() {
+	public Set<Payment> getPayments() {
 		if (payments == null)
-			return new ArrayList<>();
+			return new HashSet<>();
 		return payments;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	public void setPayments(List<Payment> payments) {
+	public void setPayments(Set<Payment> payments) {
 		this.payments = payments;
+	}
+	public void addPayment(BigDecimal amount, User whoPaid) {
+		Payment payment = new Payment();
+		payment.setBilling(this);
+		
+		if (first.getId().equals(whoPaid.getId()))
+			payment.setAmount(amount);
+		else 
+			payment.setAmount(amount.negate());
+		getPayments().add(payment);
 	}
 }

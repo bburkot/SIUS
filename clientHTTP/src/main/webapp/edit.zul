@@ -18,31 +18,32 @@
 			<rows>
 				<row>
 					<label value="Imię"/>
-					<textbox/>
+					<textbox value="@bind(vm.user.firstname)" constraint="no empty"/>
 				</row>
 				<row>
 					<label value="Nazwisko"/>
-					<textbox/>
+					<textbox value="@bind(vm.user.lastname)" constraint="no empty"/>
 				</row>
 				<row>
 					<label value="Mail"/>
-					<textbox/>
+					<textbox value="@bind(vm.user.email)" constraint="no empty"/>
 				</row>
 				<row>
-					<label value="Stare hasło"/>
-					<textbox type="password"/>
-				</row>
-				<row>
-					<label value="Nowe hasło"/>
-					<textbox type="password"/>
-				</row>
-				<row>
-					<label value="Powtórz hasło"/>
-					<textbox type="password"/>
+					<label value="Hasło"/>
+					<textbox type="password" constraint="no empty" id="oldPassword"/>
 				</row>
 				<row>
 					<cell/>
-					<button label="Zapisz"/>
+					<button label="Zapisz">
+						<attribute name="onClick"><![CDATA[                          
+							
+							if (oldPassword.getValue() == null ||  oldPassword.getValue().equals("")){
+								 Messagebox.show("Wymagane jest podanie starego hasła", "Error", Messagebox.OK, Messagebox.ERROR);
+								 return;
+							}
+							vm.updateData(oldPassword.getValue());
+						]]></attribute>
+					</button>
 				</row>
 			</rows>					
 		</grid>	
